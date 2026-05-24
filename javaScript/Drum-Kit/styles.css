@@ -1,0 +1,71 @@
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #2c3e50, #4ca1af);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    color: #fff;
+}
+
+/* Heading Styles */
+.title {
+    margin-top: 40px;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.subtitle {
+    margin-bottom: 30px;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Drum Container */
+.drum-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 40px;
+}
+
+/* Drum Pad Box */
+.drum-pad {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.07s ease;
+    user-select: none;
+}
+
+/* Hover effect */
+.drum-pad:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.playing {
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    border-color: #fff;
+}
+
+/* Key Label Styling */
+kbd {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Instrument Name */
+.drum-pad span {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    opacity: 0.8;
+}

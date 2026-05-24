@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --primary-color: #48484a;
+    --secondary-color: #f65c20;
+    --background-color: #faf7f4;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+body {
+    background: #212121;
+    color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+
+}
+
+.outer_container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    padding: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 550px;
+}
+
+.container {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    text-align: center;
+}
+
+.inputbox_container {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.inputbox_container input {
+    flex: 1;
+    padding: 7px 15px;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+
+.inputbox_container input:focus {
+    outline: 2px solid blue;
+}
+
+.inputbox_container button {
+    padding: 7px 15px;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    background: var(--secondary-color);
+}
+
+.inputbox_container button:active {
+    transform: scale(1.1);
+    transition: transform 0.3s linear;
+}
+
+.container>div:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+}
+
+.city_name {
+    font-size: 1.6rem;
+}
+
+.weather_icon img {
+    width: 100px;
+}
+
+.temperature {
+    font-size: 1.5rem;
+}
+
+.container>div:nth-of-type(3) {
+    width: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.container>div:nth-of-type(3) div {
+    border: 1px solid #FF6B2C;
+    background-color: var(--background-color);
+    color: #FF6B2C;
+    display: flex;
+    gap: 0;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+}

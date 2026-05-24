@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+     @apply bg-[#212121] text-white;
+  }
+
+  /* h1 {
+    @apply text-4xl font-bold;
+  }
+
+  button {
+    @apply px-4 py-2 rounded-lg;
+  } */
+}
+
+/* 
+@layer components {
+  .primary-btn {
+    @apply bg-blue-500 text-white px-5 py-2 rounded-lg;
+  }
+
+  .card {
+    @apply bg-zinc-800 p-5 rounded-xl shadow-lg;
+  }
+} */

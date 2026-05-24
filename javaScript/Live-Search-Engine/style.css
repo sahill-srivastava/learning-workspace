@@ -1,0 +1,90 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #d4a373;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px;
+}
+
+.container {
+  width: 500px;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 2rem;
+  text-shadow: 2px 3px 2px #000000;
+}
+
+/* Search box container */
+.search-box {
+  width: 100%;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Stylish input */
+.searchInput {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.searchInput:focus {
+  border-color: #333;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+/* List items */
+.results-list {
+  list-style: none;
+  width: 90%;
+  margin-inline: auto;
+}
+
+.results-list li {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 15px 20px;
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  clip-path: polygon(0% 0, 100% 0, 99% 100%, 1% 100%);
+}
+
+.results-list li:nth-child(even) {
+  clip-path: polygon(1% 0, 99% 0, 100% 100%, 0 100%);
+}
+
+.city {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.population {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Highlighted matches */
+.highlight {
+  background-color: yellow;
+  border-radius: 2px;
+}

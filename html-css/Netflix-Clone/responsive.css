@@ -1,0 +1,302 @@
+/* Global styles */
+
+@media screen and (max-width: 769px) {
+
+    .wrapper {
+        max-width: 100% !important;
+        margin: 0 auto;
+    }
+
+    :root {
+
+        /* Global Fonts */
+        --font-size-h1: 30px;
+        --font-size-h2: 20px;
+        --font-size-h3: 18px;
+        --font-size-lg-text: 16px;
+    }
+}
+
+@media screen and (max-width: 413px) {
+
+    .wrapper {
+        max-width: 100% !important;
+        margin: 0 auto;
+    }
+
+    :root {
+
+        /* Global Fonts */
+        --font-size-h1: 32px;
+        --font-size-h2: 20px;
+        --font-size-h3: 18px;
+        --font-size-lg-text: 15px;
+    }
+
+}
+
+
+/*  Header section */
+
+@media screen and (max-width: 769px) {
+
+    .netflix-logo-lg img {
+        width: 22%;
+    }
+}
+
+@media screen and (max-width: 413px) {
+
+    .netflix-logo-lg {
+        display: none;
+    }
+
+    .netflix-logo-sm img {
+        display: block;
+        width: 8%;
+    }
+
+    .navbar_components select {
+        display: none;
+    }
+}
+
+
+/*  Hero section */
+
+@media screen and (max-width: 769px) {
+
+    .button-container input {
+        width: 250px;
+        padding: 0.5rem 1rem;
+    }
+
+    .button-container button {
+        padding: 0.5rem 0.6rem;
+        margin-left: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 413px) {
+
+    .hero-content h1,
+    .hero-content p {
+        text-align: center;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .button-container input {
+        width: 200px;
+    }
+
+}
+
+/* Section Two */
+
+@media screen and (max-width: 769px) {
+
+    .section-two-container {
+        padding: 4rem 2rem;
+    }
+
+    .section-two-content {
+        padding: 0;
+    }
+
+}
+
+@media screen and (max-width: 413px) {
+
+    .section-two {
+        /* height: fit-content; */
+        height: 70vh;
+    }
+
+    .section-two-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "section-two-content"
+            "section-two-img";
+    }
+
+    .section-two-content {
+        padding: 0;
+    }
+
+    .section-two-img {
+        grid-area: section-two-img;
+    }
+
+    .section-two-content {
+        grid-area: section-two-content;
+    }
+
+
+}
+
+/* section three */
+
+@media screen and (max-width: 769px) {
+
+    .section-three-container {
+        padding: 4rem 2rem;
+    }
+
+    .section-three-content {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 413px) {
+
+    .section-three {
+        height: 70vh;
+    }
+
+    .section-three-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "section-three-content"
+            "section-three-img";
+    }
+
+
+    .section-three-content {
+        padding: 0;
+    }
+
+    .section-three-img {
+        grid-area: section-three-img;
+    }
+
+    .section-three-content {
+        grid-area: section-three-content;
+    }
+
+}
+
+
+/* Section four */
+
+@media screen and (max-width: 769px) {
+
+    .section-four-container {
+        padding: 4rem 2rem;
+    }
+
+    .section-four-content {
+        padding: 0;
+    }
+
+}
+
+@media screen and (max-width: 413px) {
+
+    .section-four {
+        /* height: fit-content; */
+        height: 70vh;
+    }
+
+    .section-four-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "section-four-content"
+            "section-four-img";
+    }
+
+    .section-four-content {
+        padding: 0;
+    }
+
+    .section-four-img {
+        grid-area: section-four-img;
+    }
+
+    .section-four-content {
+        grid-area: section-four-content;
+    }
+}
+
+
+/* section five */
+
+@media screen and (max-width: 769px) {
+
+    .section-five-container {
+        padding: 4rem 2rem;
+    }
+
+    .section-five-content {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 413px) {
+
+    .section-five {
+        height: 70vh;
+    }
+
+    .section-five-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "section-five-content"
+            "section-five-img";
+    }
+
+
+    .section-five-content {
+        padding: 0;
+    }
+
+    .section-five-img {
+        grid-area: section-five-img;
+    }
+
+    .section-five-content {
+        grid-area: section-five-content;
+    }
+
+}
+
+
+/* FAQ section*/
+
+@media screen and (max-width: 769px) {
+
+    .faq-container {
+        padding: 20px;
+    }
+
+    .faq-question {
+        padding: 20px 20px;
+    }
+}
+
+
+/* Footer*/
+
+@media screen and (max-width: 769px) {
+
+    .footer-container {
+        padding: 4rem 20px;
+    }
+}
+
+@media screen and (max-width: 413px) {
+
+    .footer-content-list {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 2rem;
+    }
+
+}

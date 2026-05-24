@@ -1,0 +1,24 @@
+{
+  "name": "namastesahil",
+  "version": "1.0.0",
+  "description": "this is for learning purpose",
+  "keywords": [
+    "sahil",
+    "namastesahil"
+  ],
+  "homepage": "https://github.com/sahill-srivastava/NamasterReact#readme",
+  "bugs": {
+    "url": "https://github.com/sahill-srivastava/NamasterReact/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sahill-srivastava/NamasterReact.git"
+  },
+  "license": "ISC",
+  "author": "Sahil Srivastava",
+  "type": "commonjs",
+  "main": "App.js",
+  "scripts": {
+    "test": "helloworld"
+  }
+}

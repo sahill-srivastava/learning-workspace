@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drum Kit</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <h1 class="title">🎵 JavaScript Drum Kit</h1>
+    <p class="subtitle">Press the keys or click the buttons to play sounds</p>
+
+    <div class="drum-container">
+
+        <div class="drum-pad" data-key="65" data-sound="kick">
+            <kbd>A</kbd>
+            <span>Kick</span>
+        </div>
+
+        <div class="drum-pad" data-key="83" data-sound="snare">
+            <kbd>S</kbd>
+            <span>Snare</span>
+        </div>
+
+        <div class="drum-pad" data-key="68" data-sound="tom1">
+            <kbd>D</kbd>
+            <span>Tom 1</span>
+        </div>
+
+        <div class="drum-pad" data-key="70" data-sound="tom2">
+            <kbd>F</kbd>
+            <span>Tom 2</span>
+        </div>
+
+        <div class="drum-pad" data-key="71" data-sound="tom3">
+            <kbd>G</kbd>
+            <span>Tom 3</span>
+        </div>
+
+        <div class="drum-pad" data-key="72" data-sound="crash">
+            <kbd>H</kbd>
+            <span>Crash</span>
+        </div>
+
+        <div class="drum-pad" data-key="74" data-sound="tom4">
+            <kbd>J</kbd>
+            <span>Tom 4</span>
+        </div>
+
+    </div>
+
+    <audio src="sounds/kick-bass.mp3" data-key="65"></audio>
+    <audio src="sounds/snare.mp3" data-key="83"></audio>
+    <audio src="sounds/tom-1.mp3" data-key="68"></audio>
+    <audio src="sounds/tom-2.mp3" data-key="70"></audio>
+    <audio src="sounds/tom-3.mp3" data-key="71"></audio>
+    <audio src="sounds/crash.mp3" data-key="72"></audio>
+    <audio src="sounds/tom-4.mp3" data-key="74"></audio>
+
+    <!-- Script file location -->
+    <script src="script.js"></script>
+</body>
+
+</html>
