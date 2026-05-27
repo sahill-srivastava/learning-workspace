@@ -4,5 +4,5 @@ import App from './App.jsx'
 import AppClass from './AppClass.jsx'
 
 createRoot(document.getElementById('root')).render(
-    <AppClass />
+    <AppClass name="sahil" />
 )

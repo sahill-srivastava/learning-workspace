@@ -1,12 +1,17 @@
-import {Component} from "react"
+import { Component } from "react";
 
 class AppClass extends Component {
+//   constructor(props) {
+//     super(props);
 
+//     console.log(props);
+//   }
 
   render() {
-    return (
-      <div>Class Based Component</div>
-    )
+    return <div>
+        <h1>Class Based Component</h1>
+        <div>{this.props.name}</div>
+    </div>;
   }
 }
 
