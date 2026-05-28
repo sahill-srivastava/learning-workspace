@@ -7,9 +7,19 @@ class AppClass extends Component {
     this.state = {
         count: 0,
     }
+
+    console.log("Constructur")
+  }
+
+
+  componentDidMount() {
+    console.log("MOunt")
   }
 
   render() {
+
+    console.log("Render");
+    
 
     const {name} = this.props;
     const {count} = this.state;
@@ -19,6 +29,11 @@ class AppClass extends Component {
         <h1>Class Based Component</h1>
         <div>{name}</div>
         <div>{count}</div>
+        <button onClick={() => {
+            this.setState({
+                count: count + 1,
+            })
+        }}>click</button>
     </div>;
   }
 }
