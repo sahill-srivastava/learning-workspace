@@ -1,40 +1,31 @@
 import { Component } from "react";
+import CountClass from "./CountClass";
 
 class AppClass extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-        count: 0,
-    }
+   
 
-    console.log("Constructur")
+    console.log("parent constructor");
   }
 
-
   componentDidMount() {
-    console.log("MOunt")
+    console.log("parent component did mount");
   }
 
   render() {
-
-    console.log("Render");
-    
-
-    const {name} = this.props;
-    const {count} = this.state;
+    console.log("parent render");
 
 
-    return <div>
-        <h1>Class Based Component</h1>
-        <div>{name}</div>
-        <div>{count}</div>
-        <button onClick={() => {
-            this.setState({
-                count: count + 1,
-            })
-        }}>click</button>
-    </div>;
+
+    return (
+      <div>
+        <h1>This is App Class</h1>
+        <CountClass name="first" val={0} />
+        <CountClass name="second" val={100} />
+      </div>
+    );
   }
 }
 
