@@ -15,3 +15,9 @@
         min-height: 100vh;
     }
 }
+
+@layer components {
+    .btn {
+        @apply bg-purple-600 text-white rounded
+    }
+}
