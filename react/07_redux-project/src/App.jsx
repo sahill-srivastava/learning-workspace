@@ -1,10 +1,13 @@
 import { Provider } from "react-redux";
 import appStore from "./app/appStore";
+import Selector from "./Selector";
+import Dispatch from "./Dispatch";
 
 const App = () => {
   return (
     <Provider store={appStore}>
-      <div>App</div>;
+     <Selector />
+     <Dispatch />
     </Provider>
   )
 };
