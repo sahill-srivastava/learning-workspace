@@ -5,46 +5,69 @@ import { useRef } from "react";
 gsap.registerPlugin(useGSAP);
 
 export default function Timeline() {
-  const menuRef = useRef(null);
-  const timelineRef = useRef(null);
+  useGSAP(() => {
+    const tl = gsap.timeline();
 
-  useGSAP(
-    () => {
-      const tl = gsap.timeline({
-        paused: true,
-      });
+    tl.from("h1", {
+      y: -60,
+      duration: 1,
+    });
 
-      tl.from(".mobile-menu", {
-        height: 0,
-        duration: 0.4,
-      });
+    tl.from(
+      ".menu_item",
+      {
+        y: -60,
+        duration: 1,
+      },
+      "-=0.5",
+    );
 
-      tl.from(
-        ".menu-item",
-        {
-          y: -20,
-          opacity: 0,
-          stagger: 0.1,
-          duration: 0.3,
-        },
-        "<",
-      );
+    console.log(tl.duration())
 
-      timelineRef.current = tl;
-    },
-    { scope: menuRef },
-  );
+    tl.from("h2", {
+      x: -200,
+      opacity: 0,
+      duration: 1,
+    });
+
+    console.log(tl.duration())
+    console.log(tl.duration() * 1000)
+    
+    setTimeout(() => {
+      tl.reverse();
+    }, tl.duration() * 1000);
+  });
 
   return (
-    <nav ref={menuRef}>
-      <button className="menu-btn">Menu</button>
+    <div>
+      <nav>
+        <h1>Navbar</h1>
 
-      <div className="mobile-menu">
-        <a className="menu-item">Home</a>
-        <a className="menu-item">About</a>
-        <a className="menu-item">Projects</a>
-        <a className="menu-item">Contact</a>
+        <div className="menu_container">
+          <span className="menu_item">Home</span>
+          <span className="menu_item">About</span>
+          <span className="menu_item">Projects</span>
+          <span className="menu_item">Blogs</span>
+          <span className="menu_item">Contact Us</span>
+        </div>
+      </nav>
+      <div className="grid">
+        <div className="grid_box">
+          <h2>Discover the world of Timeline</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum
+            facere eum quidem cupiditate, nihil, officia fuga magni ipsa labore
+            est impedit exercitationem eligendi error nisi doloremque?
+          </p>
+          <button>Click Me</button>
+        </div>
+        <div className="grid_box">
+          <img
+            src="https://fastly.picsum.photos/id/26/4209/2769.jpg?hmac=vcInmowFvPCyKGtV7Vfh7zWcA_Z0kStrPDW3ppP0iGI"
+            alt=""
+          />
+        </div>
       </div>
-    </nav>
+    </div>
   );
 }

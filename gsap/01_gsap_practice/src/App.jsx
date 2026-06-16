@@ -1,5 +1,6 @@
 // import Box from "./Box";
 import Timeline from "./Timeline";
+// import ScrollTriggerCompo from "./ScrollTriggerCompo";
 
 export default function App() {
 
@@ -8,6 +9,7 @@ export default function App() {
     <div>
       {/* <Box /> */}
       <Timeline />
+      {/* <ScrollTriggerCompo /> */}
     </div>
   )
 }
