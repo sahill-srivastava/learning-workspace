@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+// import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
 
@@ -9,7 +9,7 @@ export default function Timeline() {
     const tl = gsap.timeline();
 
     tl.from("h1", {
-      y: -60,
+      y: -30,
       duration: 1,
     });
 
