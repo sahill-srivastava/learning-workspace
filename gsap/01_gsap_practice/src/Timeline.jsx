@@ -25,7 +25,7 @@ export default function Timeline() {
     console.log(tl.duration())
 
     tl.from("h2", {
-      x: -200,
+      x: -400,
       opacity: 0,
       duration: 1,
     });
