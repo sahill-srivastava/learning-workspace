@@ -1,8 +1,7 @@
-import sum from "./__tests__/sum";
+import sum from "./sum";
 
 function App() {
 
-  console.log(sum)
 
   const result = sum(2, 3)
 
