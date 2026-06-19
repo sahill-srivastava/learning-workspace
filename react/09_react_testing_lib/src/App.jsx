@@ -1,7 +1,12 @@
-
+import sum from "./__tests__/sum";
 
 function App() {
-  return <h1>Hello Sahil</h1>;
+
+  console.log(sum)
+
+  const result = sum(2, 3)
+
+  return <h1>{result}</h1>;
 }
 
 export default App;
