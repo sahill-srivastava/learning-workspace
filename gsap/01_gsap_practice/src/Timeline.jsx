@@ -9,7 +9,7 @@ export default function Timeline() {
     const tl = gsap.timeline();
 
     tl.from("h1", {
-      y: -30,
+      y: -200,
       duration: 1,
     });
 
