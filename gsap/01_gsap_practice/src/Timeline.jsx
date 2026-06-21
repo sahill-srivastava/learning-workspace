@@ -10,7 +10,7 @@ export default function Timeline() {
 
     tl.from("h1", {
       y: -200,
-      duration: 1,
+      duration: 2,
     });
 
     tl.from(
