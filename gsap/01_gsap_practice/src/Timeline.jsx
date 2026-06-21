@@ -17,7 +17,7 @@ export default function Timeline() {
       ".menu_item",
       {
         y: -60,
-        duration: 1,
+        duration: 10,
       },
       "-=0.5",
     );
