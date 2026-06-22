@@ -1,11 +1,14 @@
-import sum from "./sum";
-
+import Form from "./Form";
 function App() {
 
 
-  const result = sum(2, 3)
-
-  return <h1>{result}</h1>;
+ 
+return (
+  <div>
+    <Form />
+  </div>
+)
+  
 }
 
 export default App;
