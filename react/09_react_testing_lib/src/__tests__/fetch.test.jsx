@@ -13,7 +13,6 @@ it("fetch example", async () => {
         },
     ];
 
-
     global.fetch = jest.fn(() => {
         return Promise.resolve({
             json: () => {
