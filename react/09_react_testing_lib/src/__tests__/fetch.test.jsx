@@ -13,13 +13,11 @@ it("fetch example", async () => {
         },
     ];
 
-    global.fetch = jest.fn(() => {
-        return Promise.resolve({
-            json: () => {
-                return Promise.resolve(data);
-            }
+    global.fetch = jest.fn(() => 
+         Promise.resolve({
+            json: () =>  Promise.resolve(data)
         })
-    })
+   )
 
     render(<UserList />);
 
