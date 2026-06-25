@@ -1,7 +1,10 @@
+import Body from "./components/Body"
 
 const App = () => {
   return (
-    <div className="bg-purple-600">App</div>
+    <div>
+      <Body />
+    </div>
   )
 }
 
