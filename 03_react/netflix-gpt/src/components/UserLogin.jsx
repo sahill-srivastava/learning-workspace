@@ -24,6 +24,13 @@ const UserLogin = () => {
         <form className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 py-20 px-10 rounded-2xl w-3/12 bg-black/75 text-white flex flex-col items-start justify-center">
           <h1 className="font-bold text-2xl">{isSignIn ? "Sign In" : "Sign Up"}</h1>
           <input
+            type="text"
+            placeholder="Full Name"
+            className={`w-full bg-zinc-800 p-4  mt-8 rounded outline-1 outline-white
+            ${isSignIn ? "hidden" : "block"}
+            `}
+          />
+          <input
             type="email"
             placeholder="Email Address"
             className="w-full bg-zinc-800 p-4  mt-8 rounded outline-1 outline-white"
@@ -37,7 +44,7 @@ const UserLogin = () => {
             {isSignIn ? "Sign In" : "Sign Up"}
           </button>
           <p onClick={toggleSignInForm} className="cursor-pointer">
-            New to Netflix? Sign Up Now
+            {isSignIn ? "New to Netflix? Sign Up Now" : "Already User? Sign In Now"}
           </p>
         </form>
       </main>
