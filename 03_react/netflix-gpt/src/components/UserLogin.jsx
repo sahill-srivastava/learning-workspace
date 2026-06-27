@@ -1,9 +1,25 @@
 import Header from "./Header";
 import heroBanner from "../assets/netflix-hero-banner.jpg";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { checkValidateData } from "../utils/validate";
 
 const UserLogin = () => {
   const [isSignIn, setIsSignIn] = useState(true);
+
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleBtnClick = (e) => {
+    e.preventDefault();
+    //validate form data
+    
+    console.log(email.current.value)
+    console.log(password.current.value)
+
+    const msg = checkValidateData(email.current.value, password.current.value);
+    console.log(msg);
+    
+  };
 
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
@@ -33,16 +49,21 @@ const UserLogin = () => {
             `}
           />
           <input
+            ref={email}
             type="email"
             placeholder="Email Address"
             className="w-full bg-zinc-800 p-4  mt-8 rounded outline-1 outline-white"
           />
           <input
+            ref={password}
             type="password"
             placeholder="Password"
             className="w-full bg-zinc-800 p-4  mt-8 rounded outline-1 outline-white"
           />
-          <button className="w-full p-4 my-10 rounded bg-red-600">
+          <button
+            className="w-full p-4 my-10 rounded bg-red-600"
+            onClick={handleBtnClick}
+          >
             {isSignIn ? "Sign In" : "Sign Up"}
           </button>
           <p onClick={toggleSignInForm} className="cursor-pointer">
