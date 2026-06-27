@@ -6,19 +6,23 @@ import { checkValidateData } from "../utils/validate";
 const UserLogin = () => {
   const [isSignIn, setIsSignIn] = useState(true);
 
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
   const handleBtnClick = (e) => {
     e.preventDefault();
     //validate form data
-    
-    console.log(email.current.value)
-    console.log(password.current.value)
-
-    const msg = checkValidateData(email.current.value, password.current.value);
+    const msg = checkValidateData(
+      isSignIn,
+      name.current?.value,
+      email.current.value,
+      password.current.value,
+    );
     console.log(msg);
-    
+    setErrorMsg(msg);
   };
 
   const toggleSignInForm = () => {
@@ -42,6 +46,7 @@ const UserLogin = () => {
             {isSignIn ? "Sign In" : "Sign Up"}
           </h1>
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className={`w-full bg-zinc-800 p-4  mt-8 rounded outline-1 outline-white
@@ -60,6 +65,7 @@ const UserLogin = () => {
             placeholder="Password"
             className="w-full bg-zinc-800 p-4  mt-8 rounded outline-1 outline-white"
           />
+          <p className="text-red-600 my-4">{errorMsg}</p>
           <button
             className="w-full p-4 my-10 rounded bg-red-600"
             onClick={handleBtnClick}
