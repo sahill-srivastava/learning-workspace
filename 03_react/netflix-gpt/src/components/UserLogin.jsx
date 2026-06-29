@@ -3,6 +3,10 @@ import heroBanner from "../assets/netflix-hero-banner.jpg";
 import { useRef, useState } from "react";
 import { checkValidateData } from "../utils/validate";
 
+// firebase
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
+
 const UserLogin = () => {
   const [isSignIn, setIsSignIn] = useState(true);
 
@@ -21,8 +25,38 @@ const UserLogin = () => {
       email.current.value,
       password.current.value,
     );
+
     console.log(msg);
     setErrorMsg(msg);
+
+    //if msg present, error present - don't create user
+    if (msg) return;
+
+    //sign in / sign up , create user in firebase
+    if (!isSignIn) {
+      // sign  up logic
+      console.log("Creating User...");
+
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log("SUCCESS");
+          console.log(userCredential.user);
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMsg(errorCode + "-" + errorMessage);
+        });
+    } else {
+      //sign in logic
+    }
   };
 
   const toggleSignInForm = () => {
