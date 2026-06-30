@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { checkValidateData } from "../utils/validate";
 
 // firebase
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
 
 const UserLogin = () => {
@@ -35,19 +35,14 @@ const UserLogin = () => {
     //sign in / sign up , create user in firebase
     if (!isSignIn) {
       // sign  up logic
-      console.log("Creating User...");
-
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
         password.current.value,
       )
         .then((userCredential) => {
-          // Signed up
           const user = userCredential.user;
-          console.log("SUCCESS");
-          console.log(userCredential.user);
-          console.log(user);
+          // console.log(user)
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -56,6 +51,21 @@ const UserLogin = () => {
         });
     } else {
       //sign in logic
+
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          // console.log(user)
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMsg(errorCode + "-" + errorMessage);
+        });
     }
   };
 
