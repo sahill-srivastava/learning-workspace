@@ -109,7 +109,7 @@ const UserLogin = () => {
             placeholder="Password"
             className="w-full bg-zinc-800 p-4  mt-8 rounded outline-1 outline-white"
           />
-          <p className="text-red-600 my-4">{errorMsg}</p>
+          <p className="text-red-600 mt-4">{errorMsg}</p>
           <button
             className="w-full p-4 my-10 rounded bg-red-600"
             onClick={handleBtnClick}
