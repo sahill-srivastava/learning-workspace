@@ -2,9 +2,11 @@ import logo from "../assets/netflix-logo.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
+  const user = useSelector(store => store.user)
 
 
   const handleSignOut = () => {
@@ -25,8 +27,8 @@ const Header = () => {
 
       <div className="w-fit flex items-center gap-4">
         <img
-          className="cursor-pointer"
-          src="https://occ-0-4409-3647.1.nflxso.net/dnm/api/v6/SO2HoVCx33X8phZh2pZZmQ4QgNY/AAAABS8sWFjSyj1zyfgcnGamqyJ1E2ZubZGo8dndCM_ipf_5UpmVlkuf8IXzQlmPZQqTMWNjWukESRdLkFGHnf7zbY3MJCO3r4s.png?r=229"
+          className="cursor-pointer w-10 rounded-4xl"
+          src={user?.photoURL}
           alt="user-icon"
         />
         <button
