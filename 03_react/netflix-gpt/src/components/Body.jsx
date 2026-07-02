@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useNavigate,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Browse from "./Browse";
 import UserLogin from "./UserLogin";
 import { useEffect } from "react";
@@ -13,7 +9,6 @@ import { addUser, removerUser } from "../utils/userSlice";
 
 const Body = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const appRouter = createBrowserRouter([
     {
@@ -29,13 +24,11 @@ const Body = () => {
   (useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("user: ", user);
+        // console.log("user: ", user);
         const { uid, email, displayName } = user.uid;
         dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
-        navigate("/browse");
       } else {
         dispatch(removerUser());
-        navigate("/");
       }
     });
   }),
