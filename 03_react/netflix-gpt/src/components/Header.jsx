@@ -6,8 +6,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
-  const user = useSelector(store => store.user)
-
+  const user = useSelector((store) => store.user);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -25,19 +24,21 @@ const Header = () => {
     <div className="absolute w-screen z-50 px-5 py-2.5 bg-gradient-to-b from-black flex justify-between gap-4">
       <img className="w-40" src={logo} alt="logo" />
 
-      <div className="w-fit flex items-center gap-4">
-        <img
-          className="cursor-pointer w-10 rounded-4xl"
-          src={user?.photoURL}
-          alt="user-icon"
-        />
-        <button
-          onClick={handleSignOut}
-          className="text-white bg-red-600 rounded p-2 cursor-pointer"
-        >
-          Sign Out
-        </button>
-      </div>
+      {user && (
+        <div className="w-fit flex items-center gap-4">
+          <img
+            className="cursor-pointer w-10 rounded-4xl"
+            src={user?.photoURL}
+            alt="user-icon"
+          />
+          <button
+            onClick={handleSignOut}
+            className="text-white bg-red-600 rounded p-2 cursor-pointer"
+          >
+            Sign Out
+          </button>
+        </div>
+      )}
     </div>
   );
 };
