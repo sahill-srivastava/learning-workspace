@@ -56,7 +56,7 @@ const Header = () => {
       {user && (
         <div className="w-fit flex items-center gap-4">
           <img
-            className="cursor-pointer w-10 rounded-4xl"
+            className="cursor-pointer w-10"
             src={user?.photoURL}
             alt="user-icon"
           />
