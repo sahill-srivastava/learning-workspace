@@ -9,11 +9,11 @@ const Browse = () => {
       API_OPTIONS,
     );
 
-    console.log("res: ", res);
+    // console.log("res: ", res);
 
     const data = await res.json();
 
-    console.log("data: ", data.results);
+    console.log("data: ", data);
   };
 
   useEffect(() => {
