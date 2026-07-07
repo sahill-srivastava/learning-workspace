@@ -34,7 +34,6 @@ const UserLogin = () => {
       password.current.value,
     );
 
-    // console.log(msg);
     setErrorMsg(msg);
 
     //if msg present, error present - don't create user
@@ -50,7 +49,6 @@ const UserLogin = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          // console.log(user)
           updateProfile(user, {
             displayName: name.current.value,
             photoURL: USER_AVATAR,
