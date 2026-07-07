@@ -1,34 +1,21 @@
-import { useEffect } from "react";
-import { API_OPTIONS } from "../utils/constants";
+import { useSelector } from "react-redux";
+import useMovieTrailer from "../hooks/useMovieTrailer";
 
 const VideoBackground = ({ movieId }) => {
-  //fetch trailer video
-  const getMoviesVideos = async (movieId) => {
-    const res = await fetch(
-      "https://api.themoviedb.org/3/movie/" +
-        movieId +
-        "/videos?language=en-US",
-      API_OPTIONS,
-    );
+  useMovieTrailer(movieId);
 
-    // console.log(res);
+  const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
 
-    const data = await res.json();
-
-    // console.log(data);
-
-    const filterData = data.results.filter(video => video.type === "Trailer")
-
-    const trailer = filterData.length ? filterData[[0]] : data.results[0];
-
-
-    console.log(trailer)
-  };
-
-  useEffect(() => {
-    getMoviesVideos(movieId);
-  }, []);
-  return <div>VideoBackground</div>;
+  return (
+    <div>
+      <iframe
+        src={`https://www.youtube.com/embed/${trailerVideo?.key}?si=2xYMdilmVDqDDWeU`}
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+      ></iframe>
+    </div>
+  );
 };
 
 export default VideoBackground;
