@@ -1,17 +1,5 @@
-// require("./modules.js")
+const {sum, mul}= require("./calculate")
 
-const sum = require("./sum.js")
 
-let name = "Sahil";
-
-let a = 10;
-
-let b = 20;
-
-// use exports 
-
-console.log(sum)
-
-console.log(sum.x)
-
-console.log(sum.add(2, 3));
+console.log(sum(2, 3))
+console.log(mul(2, 3))
