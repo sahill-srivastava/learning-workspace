@@ -1,6 +1,6 @@
 // require("./modules.js")
 
-require("./sum.js")
+const sum = require("./sum.js")
 
 let name = "Sahil";
 
@@ -8,7 +8,10 @@ let a = 10;
 
 let b = 20;
 
+// use exports 
 
-console.log(x)
+console.log(sum)
 
-sum(2, 3);
+console.log(sum.x)
+
+console.log(sum.add(2, 3));

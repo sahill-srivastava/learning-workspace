@@ -4,10 +4,13 @@ console.log("Sum executed")
 
 let x = "hello world";
 
-console.log(x)
+// console.log(x)
 
-function sum(a, b) {
-    const sum  = a + b;
+function add(a, b) {
+    return a + b;
+}
 
-    console.log(sum)
+module.exports = {
+    x,
+    add
 }
