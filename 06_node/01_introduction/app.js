@@ -1,5 +1,3 @@
-const {sum, mul}= require("./calculate")
+require("./calculate")
 
-
-console.log(sum(2, 3))
-console.log(mul(2, 3))
+console.log(mul(4, 5))
