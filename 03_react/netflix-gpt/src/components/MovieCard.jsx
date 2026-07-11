@@ -1,7 +1,11 @@
+import { IMG_CDN_URL } from "../utils/constants"
 
-const MovieCard = () => {
+const MovieCard = ({posterPath}) => {
+    console.log(posterPath)
   return (
-    <div>MovieCard</div>
+    <div className="w-48">
+        <img className="rounded" src={IMG_CDN_URL + posterPath} alt="movie-poster" />
+    </div>
   )
 }
 
