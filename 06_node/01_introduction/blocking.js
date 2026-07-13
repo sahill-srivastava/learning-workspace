@@ -6,9 +6,9 @@ console.log("Hello World");
 var a = 1078698;
 var b = 20986;
 
-//No callback
+//No callback, it will block main thread - don't use it
 //Sync Function
-crypto.pbkdf2Sync("password123", "salt", 500000, 50, "sha512")
+crypto.pbkdf2Sync("password123", "salt", 5000000, 50, "sha512")
 console.log("first key is generted");
 
 //Password Base Key Derivation Function
@@ -25,3 +25,15 @@ function multiplyFn(x, y) {
 var c = multiplyFn(a, b);
 
 console.log("Multiplication result is : ", c);
+
+
+/*
+Console Output:
+
+
+Hello World
+first key is generted
+Multiplication result is :  22637556228
+key is generated
+
+*/
