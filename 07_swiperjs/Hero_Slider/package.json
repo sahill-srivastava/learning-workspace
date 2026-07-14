@@ -1,5 +1,5 @@
 {
-  "name": "01_swiper_introduction",
+  "name": "npm",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.3.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "swiper": "^14.0.5",
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
