@@ -22,6 +22,7 @@ const App = () => {
       <Swiper className=" h-[90vh]"
         modules={[Navigation, Pagination]}
         navigation
+        grabCursor
         pagination={{clickable: true}}
       >
         <SwiperSlide
