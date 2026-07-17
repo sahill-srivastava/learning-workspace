@@ -54,6 +54,9 @@ const Header = () => {
 
       {user && (
         <div className="w-fit flex items-center gap-4">
+          <button
+          className="text-white bg-yellow-600 rounded p-2 px-3 cursor-pointer"
+          >GPT Search</button>
           <img
             className="cursor-pointer w-10"
             src={user?.photoURL}
@@ -61,7 +64,7 @@ const Header = () => {
           />
           <button
             onClick={handleSignOut}
-            className="text-white bg-red-600 rounded p-2 cursor-pointer"
+            className="text-white bg-red-600 rounded p-2 px-3 cursor-pointer"
           >
             Sign Out
           </button>
