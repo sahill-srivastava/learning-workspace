@@ -1,27 +1,34 @@
-// import { MongoClient } from 'mongodb'
 const { MongoClient } = require('mongodb');
 
 // Connection URL
-const url = "mongodb+srv://sahil682002_db_user:1UptXTu9facd8TgB@namastenode.fvk5f8i.mongodb.net/"
+const url =
+  "mongodb://sahil682002_db_user:1UptXTu9facd8TgB@ac-zwdsgva-shard-00-00.fvk5f8i.mongodb.net:27017,ac-zwdsgva-shard-00-01.fvk5f8i.mongodb.net:27017,ac-zwdsgva-shard-00-02.fvk5f8i.mongodb.net:27017/?ssl=true&replicaSet=atlas-gcjt4m-shard-0&authSource=admin&appName=NamasteNode";
+
+// Create MongoDB Client
 const client = new MongoClient(url);
 
 // Database Name
-const dbName = 'HelloWorld';
-
+const dbName = "HelloWorld";
 
 async function main() {
-  // Use connect method to connect to the server
+  // Connect to MongoDB
   await client.connect();
-  console.log('Connected successfully to server');
+  console.log("✅ Connected successfully to server");
+
+  // Get Database
   const db = client.db(dbName);
-  const collection = db.collection('User');
 
-  // the following code examples can be pasted here...
+  // Get Collection
+  const collection = db.collection("User");
 
-  return 'done.';
+  // Your MongoDB operations go here...
+
+  return "done.";
 }
 
 main()
   .then(console.log)
   .catch(console.error)
-  .finally(() => client.close());
+  .finally(async () => {
+    await client.close();
+  });
