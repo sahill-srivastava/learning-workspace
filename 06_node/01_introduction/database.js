@@ -22,6 +22,8 @@ async function main() {
   const collection = db.collection("User");
 
   // Your MongoDB operations go here...
+  const findResult = await collection.find({}).toArray();
+  console.log('Found documents =>', findResult);
 
   return "done.";
 }
