@@ -21,9 +21,24 @@ async function main() {
   // Get Collection
   const collection = db.collection("User");
 
-  // Your MongoDB operations go here...
+  const data = {
+    firstName: "John",
+    lastName: "Wick",
+    city: "Canada",
+    phone: "6544654486"
+  };
+
+  //Insert
+  const insertResult = await collection.insertMany([data]);
+  console.log('Inserted documents =>', insertResult);
+
+  // Read
   const findResult = await collection.find({}).toArray();
   console.log('Found documents =>', findResult);
+
+  //Count 
+  const countResult = await collection.countDocuments({});
+  console.log('Count documents =>', countResult);
 
   return "done.";
 }
