@@ -22,4 +22,5 @@ export const SUPPORTED_LANGUAGES = [{
   identifier: "spanish",
   name: "española"
 }]
+
 export const OPENAI_KEY = import.meta.env.VITE_OPENAI_KEY;
