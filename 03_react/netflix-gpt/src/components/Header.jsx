@@ -13,6 +13,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -58,8 +59,8 @@ const Header = () => {
   };
 
   const handleLangChange = (e) => {
-    dispatch(changeLang(e.target.value))
-  }
+    dispatch(changeLang(e.target.value));
+  };
 
   return (
     <div className="absolute w-screen z-50 px-5 py-2.5 bg-gradient-to-b from-black flex justify-between gap-4">
@@ -67,16 +68,23 @@ const Header = () => {
 
       {user && (
         <div className="w-fit flex items-center gap-4">
-          <select
-          onChange={handleLangChange}
-          className="bg-white/90 p-1 rounded cursor-pointer">
-            {SUPPORTED_LANGUAGES.map(lang =>  <option key={lang.identifier} value={lang.identifier}>{lang.name}</option>)}
-          </select>
+          {showGptSearch && (
+            <select
+              onChange={handleLangChange}
+              className="bg-white/90 p-1 rounded cursor-pointer"
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
           <button
             onClick={handleGptSearch}
             className="text-white bg-yellow-600 rounded p-2 px-3 cursor-pointer"
           >
-            GPT Search
+            {showGptSearch ? "Home" : "GPT Search"}
           </button>
           <img
             className="cursor-pointer w-10"
