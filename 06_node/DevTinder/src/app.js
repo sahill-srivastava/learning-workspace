@@ -1,17 +1,12 @@
 const express = require("express")
 
+const { adminAuth } = require("./middlewares/auth")
 
 const app = express();
 
 
-app.use("/user", (req, res, next) => {
 
-    
-    // res.send("hello world1")
-    next();
-}, (req, res) => {
-     res.send("hello world2")
-})
+app.use("/admin", adminAuth)
 
 
 
