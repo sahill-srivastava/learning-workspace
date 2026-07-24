@@ -4,20 +4,14 @@ const express = require("express")
 const app = express();
 
 
-//GET call
-app.get("/user", (req, res) => {
-    res.send({firstName: "Sahil", lastName: "Srivastava"});
-});
+app.use("/user", (req, res, next) => {
 
-//POST call
-app.post("/user", (req, res) => {
-    res.send("Save data to db.");
-});
-
-//DELETE call
-app.delete("/user", (req, res) => {
-    res.send("Deleted successfully");
-});
+    
+    // res.send("hello world1")
+    next();
+}, (req, res) => {
+     res.send("hello world2")
+})
 
 
 
