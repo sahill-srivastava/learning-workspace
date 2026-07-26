@@ -9,8 +9,8 @@ app.post("/signup", async (req, res) => {
     const userObj = {
         firstName: "Sahil",
         lastName: "Srivastava",
-        emailId: "gunjan@gmail.com",
-        password: "gunjan@pagal",
+        emailId: "sahil@gmail.com",
+        password: "sahil@12345",
     }
 
     //creating the new instance of the User model
