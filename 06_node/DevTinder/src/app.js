@@ -31,15 +31,24 @@ app.get("/user", async (req, res) => {
         const user = await User.find({ emailId: userEmail });
 
         res.send(user)
- 
+
     } catch (err) {
         res.status(400).send("Something went wrong")
     }
 })
 
 //feed api = get /feed - get all the users from the db
-app.get("/feed", (req, res) => {
+app.get("/feed", async (req, res) => {
 
+    try {
+
+        const users = await User.find({});
+
+        res.send(users)
+
+    } catch (err) {
+        res.status(400).send("Something went wrong")
+    }
 })
 
 // Rule: Connect/Establish database connection first then start server/listening port requests
