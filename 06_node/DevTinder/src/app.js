@@ -9,7 +9,6 @@ app.use(express.json())
 
 app.post("/signup", async (req, res) => {
 
-    console.log(req.body)
     const userObj = req.body;
 
     //creating the new instance of the User model
@@ -20,6 +19,28 @@ app.post("/signup", async (req, res) => {
     res.send("user add successfully")
 })
 
+
+//Get user by email
+app.get("/user", async (req, res) => {
+    const userEmail = req.body.emailId;
+
+    console.log(userEmail)
+
+    try {
+
+        const user = await User.find({ emailId: userEmail });
+
+        res.send(user)
+ 
+    } catch (err) {
+        res.status(400).send("Something went wrong")
+    }
+})
+
+//feed api = get /feed - get all the users from the db
+app.get("/feed", (req, res) => {
+
+})
 
 // Rule: Connect/Establish database connection first then start server/listening port requests
 connectDB().then(() => {
