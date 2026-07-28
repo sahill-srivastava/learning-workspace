@@ -7,6 +7,7 @@ const User = require("./models/user")
 app.use(express.json())
 
 
+// POST request example - Create Data in db
 app.post("/signup", async (req, res) => {
 
     const userObj = req.body;
@@ -20,11 +21,9 @@ app.post("/signup", async (req, res) => {
 })
 
 
-//Get user by email
+//GET request example - get user by email
 app.get("/user", async (req, res) => {
     const userEmail = req.body.emailId;
-
-    console.log(userEmail)
 
     try {
 
