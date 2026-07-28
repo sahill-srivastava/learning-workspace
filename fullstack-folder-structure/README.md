@@ -1,8 +1,37 @@
-# Learning: How to initialise mern project
+# FULLSTACK FOLDER STRUCTURE
 
-This is first paragraph.
+Folder structure is categorised into two parts:
+- Frontend or client
+- Backend or server
 
-- [x] Html
-- [x] CSS
-- [ ] js
+---
+### CLIENT
 
+
+It consist frontend tools/libs/packages/source code such as:
+
+- React
+- Tailwind
+- Vite
+- package.json
+- node_modules
+- Others
+
+
+---
+### SERVER
+
+It consists backend tools/libs/packages/source code such as:
+
+- Express
+- Mongodb
+- Mongoose
+- package.json
+- node_modules
+- Others
+
+
+<br>
+---
+
+## Thankyou 🫶
