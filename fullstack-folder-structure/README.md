@@ -8,7 +8,7 @@ Folder structure is categorised into two parts:
 ### CLIENT
 
 
-It consist frontend tools/libs/packages/source code such as:
+It consists frontend tools/libs/packages/source code such as:
 
 - React
 - Tailwind
@@ -21,7 +21,7 @@ It consist frontend tools/libs/packages/source code such as:
 ---
 ### SERVER
 
-It consists backend tools/libs/packages/source code such as:
+It consists backend tools/libs/packages/source code + database logic such as:
 
 - Express
 - Mongodb

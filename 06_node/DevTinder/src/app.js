@@ -36,7 +36,7 @@ app.get("/user", async (req, res) => {
     }
 })
 
-//feed api = get /feed - get all the users from the db
+//GET example2 - get all the users from the db
 app.get("/feed", async (req, res) => {
 
     try {
@@ -48,6 +48,36 @@ app.get("/feed", async (req, res) => {
     } catch (err) {
         res.status(400).send("Something went wrong")
     }
+})
+
+// DELETE example - delete one user from db
+app.delete("/user", async (req, res) => {
+
+    const userId = req.body.userId;
+
+    try{
+        const user = await User.findByIdAndDelete(userId)
+
+        res.send("User deleted successfully")
+    } catch (err) {
+        res.status(400).send("Something went wrong")
+    }
+
+})
+
+// PATCH example - delete one user from db
+app.patch("/user", async (req, res) => {
+
+    const userId = req.body.userId;
+
+    try{
+        const user = await User.findByIdAndDelete(userId)
+
+        res.send("User deleted successfully")
+    } catch (err) {
+        res.status(400).send("Something went wrong")
+    }
+
 })
 
 // Rule: Connect/Establish database connection first then start server/listening port requests
