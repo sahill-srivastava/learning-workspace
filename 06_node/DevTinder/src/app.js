@@ -55,7 +55,7 @@ app.delete("/user", async (req, res) => {
 
     const userId = req.body.userId;
 
-    try{
+    try {
         const user = await User.findByIdAndDelete(userId)
 
         res.send("User deleted successfully")
@@ -65,17 +65,23 @@ app.delete("/user", async (req, res) => {
 
 })
 
-// PATCH example - delete one user from db
+// PATCH example - 
 app.patch("/user", async (req, res) => {
 
     const userId = req.body.userId;
+    const updatedData = {
+        emailId: req.body.emailId
+    };
 
-    try{
-        const user = await User.findByIdAndDelete(userId)
+    try {
+        const user = await User.findByIdAndUpdate(userId, updatedData, {
+            returnDocument: "after",
+            runValidators: true,
+        })
 
-        res.send("User deleted successfully")
+        res.send("User updated successfully")
     } catch (err) {
-        res.status(400).send("Something went wrong")
+        res.status(400).send("Errorr: " + err.message)
     }
 
 })

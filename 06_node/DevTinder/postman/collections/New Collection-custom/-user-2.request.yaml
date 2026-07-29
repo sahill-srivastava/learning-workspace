@@ -1,0 +1,14 @@
+$kind: http-request
+name: /user
+url: http://localhost:3000/user
+method: PATCH
+body:
+  type: json
+  content: "{\r
+
+    \    \"userId\": \"6a645863399cd96c1e2f0d6b\",\r
+
+    \    \"emailId\": \"sahil@gmail.com\"\r
+
+    }"
+order: 3834
