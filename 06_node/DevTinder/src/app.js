@@ -3,6 +3,7 @@ const connectDB = require("./config/database")
 const app = express();
 const User = require("./models/user")
 const { validateSignUpData } = require("./utils/validation")
+const { hashPassword } = require("./utils/hashPassword")
 
 //converts js object into json
 app.use(express.json())
@@ -22,11 +23,33 @@ app.post("/signup", async (req, res) => {
         validateSignUpData(req)
 
         //encrypt pass
+      const passHash =  await hashPassword(req);
+      console.log(passHash)
 
-        const userObj = req.body;
+        const {
+            firstName,
+            lastName,
+            emailId,
+            age,
+            gender,
+            photoUrl,
+            about,
+            skills
+
+        } = req.body;
 
         //creating the new instance of the User model
-        const user = new User(userObj);
+        const user = new User({
+            firstName,
+            lastName,
+            emailId,
+            age,
+            gender,
+            photoUrl,
+            about,
+            skills
+
+        });
 
         await user.save();
 
