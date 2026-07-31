@@ -1,9 +1,9 @@
 $kind: http-request
-name: /signup
+name: /login
 description: ""
-url: http://localhost:3000/signup
+url: http://localhost:3000/login
 method: POST
 body:
   type: json
   content: ""
-order: 1000
+order: 1227

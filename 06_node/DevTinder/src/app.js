@@ -4,6 +4,8 @@ const app = express();
 const User = require("./models/user")
 const { validateSignUpData } = require("./utils/validation")
 const { hashPassword } = require("./utils/hashPassword")
+const validator = require("validator")
+const bcrypt = require("bcrypt");
 
 //converts js object into json
 app.use(express.json())
@@ -23,8 +25,8 @@ app.post("/signup", async (req, res) => {
         validateSignUpData(req)
 
         //encrypt pass
-      const passHash =  await hashPassword(req);
-      console.log(passHash)
+        const passHash = await hashPassword(req);
+        console.log(passHash)
 
         const {
             firstName,
@@ -43,6 +45,7 @@ app.post("/signup", async (req, res) => {
             firstName,
             lastName,
             emailId,
+            password: passHash,
             age,
             gender,
             photoUrl,
@@ -57,6 +60,44 @@ app.post("/signup", async (req, res) => {
     } catch (err) {
         res.status(400).send("ERROR : " + err.message)
     }
+})
+
+
+app.post("/login", async (req, res) => {
+
+    try {
+
+        const { emailId, password } = req.body;
+
+        if (!validator.isEmail(emailId)) {
+            throw new Error("Email is not valid")
+        }
+
+        const user = await User.findOne({ emailId: emailId})
+
+        const { password: hash} = user
+
+
+        if(!user) {
+            throw new Error ("emailId is not present in db")
+        }
+
+
+        const isPasswordValid = await bcrypt.compare(password, hash);
+
+        console.log(isPasswordValid)
+
+        if(isPasswordValid) {
+            res.send("login successfull")
+        } else {
+            throw new Error("Password is not correct");
+        }
+
+    } catch (err) {
+        res.status(400).send("ERROR : " + err.message)
+    }
+
+
 })
 
 
