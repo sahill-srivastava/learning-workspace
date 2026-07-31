@@ -2,22 +2,38 @@ const express = require("express")
 const connectDB = require("./config/database")
 const app = express();
 const User = require("./models/user")
+const { validateSignUpData } = require("./utils/validation")
 
 //converts js object into json
 app.use(express.json())
+
+app.post("/test", (req, res) => {
+    console.log("TEST HIT");
+    res.send("Working");
+});
 
 
 // POST request example - Create Data in db
 app.post("/signup", async (req, res) => {
 
-    const userObj = req.body;
+    try {
 
-    //creating the new instance of the User model
-    const user = new User(userObj);
+        //validation of data
+        validateSignUpData(req)
 
-    await user.save();
+        //encrypt pass
 
-    res.send("user add successfully")
+        const userObj = req.body;
+
+        //creating the new instance of the User model
+        const user = new User(userObj);
+
+        await user.save();
+
+        res.send("user add successfully")
+    } catch (err) {
+        res.status(400).send("ERROR : " + err.message)
+    }
 })
 
 
@@ -92,7 +108,7 @@ connectDB().then(() => {
 
     //listen port requests
     app.listen(3000, () => {
-        console.log("Server is succesfully listening on port 3000...");
+        console.log("Server is successfully listening on port 3000...");
     });
 
 }).catch(err => {
