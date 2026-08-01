@@ -6,14 +6,13 @@ const { validateSignUpData } = require("./utils/validation")
 const { hashPassword } = require("./utils/hashPassword")
 const validator = require("validator")
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken")
 
 //converts js object into json
 app.use(express.json())
 
-app.post("/test", (req, res) => {
-    console.log("TEST HIT");
-    res.send("Working");
-});
+app.use(cookieParser());
 
 
 // POST request example - Create Data in db
@@ -62,7 +61,7 @@ app.post("/signup", async (req, res) => {
     }
 })
 
-
+//POST Login
 app.post("/login", async (req, res) => {
 
     try {
@@ -85,10 +84,22 @@ app.post("/login", async (req, res) => {
 
         const isPasswordValid = await bcrypt.compare(password, hash);
 
-        console.log(isPasswordValid)
 
         if(isPasswordValid) {
+
+            //Create a jwt token
+
+            const token = await jwt.sign( { _id: user._id}, "Dev@tinder256")
+
+            console.log(token)
+
+            //Add the token to cookie and send the res back to user
+            res.cookie("token", token)
+
+
+
             res.send("login successfull")
+
         } else {
             throw new Error("Password is not correct");
         }
@@ -100,6 +111,35 @@ app.post("/login", async (req, res) => {
 
 })
 
+//Get Profile
+app.get("/profile", async (req, res) => {
+
+    try {
+
+        const cookie = req.cookies;
+
+        const { token } = cookie
+
+        const decoded = await jwt.verify(token, "Dev@tinder256")
+
+        console.log(decoded)
+ 
+        const { _id} = decoded;
+
+        console.log("id: ", _id)
+
+        const user = await User.findById(_id);
+
+        if(!user) {
+            throw new Error("user does not exist");
+        }
+
+        res.send(user)
+
+    } catch (err) {
+        res.status(400).send("ERROR : " + err.message)
+    }
+})
 
 //GET request example - get user by email
 app.get("/user", async (req, res) => {
