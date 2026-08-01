@@ -8,6 +8,7 @@ const validator = require("validator")
 const bcrypt = require("bcrypt");
 const cookieParser = require("cookie-parser")
 const jwt = require("jsonwebtoken")
+const { userAuth } = require("./middlewares/auth")
 
 //converts js object into json
 app.use(express.json())
@@ -15,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser());
 
 
-// POST request example - Create Data in db
+// POST - Sigup
 app.post("/signup", async (req, res) => {
 
     try {
@@ -72,24 +73,24 @@ app.post("/login", async (req, res) => {
             throw new Error("Email is not valid")
         }
 
-        const user = await User.findOne({ emailId: emailId})
+        const user = await User.findOne({ emailId: emailId })
 
-        const { password: hash} = user
+        const { password: hash } = user
 
 
-        if(!user) {
-            throw new Error ("emailId is not present in db")
+        if (!user) {
+            throw new Error("emailId is not present in db")
         }
 
 
-        const isPasswordValid = await bcrypt.compare(password, hash);
+        const isPasswordValid = await user.validatePassword(password)
 
 
-        if(isPasswordValid) {
+        if (isPasswordValid) {
 
             //Create a jwt token
 
-            const token = await jwt.sign( { _id: user._id}, "Dev@tinder256")
+            const token = await user.getJWT()
 
             console.log(token)
 
@@ -112,28 +113,11 @@ app.post("/login", async (req, res) => {
 })
 
 //Get Profile
-app.get("/profile", async (req, res) => {
+app.get("/profile", userAuth, async (req, res) => {
 
     try {
 
-        const cookie = req.cookies;
-
-        const { token } = cookie
-
-        const decoded = await jwt.verify(token, "Dev@tinder256")
-
-        console.log(decoded)
- 
-        const { _id} = decoded;
-
-        console.log("id: ", _id)
-
-        const user = await User.findById(_id);
-
-        if(!user) {
-            throw new Error("user does not exist");
-        }
-
+        user = req.user;
         res.send(user)
 
     } catch (err) {
@@ -141,70 +125,16 @@ app.get("/profile", async (req, res) => {
     }
 })
 
-//GET request example - get user by email
-app.get("/user", async (req, res) => {
-    const userEmail = req.body.emailId;
 
-    try {
+app.post("/sendConnectionRequest", async (req, res) => {
 
-        const user = await User.find({ emailId: userEmail });
 
-        res.send(user)
+    //sending a connection request
+    console.log("Sending a connection request")
 
-    } catch (err) {
-        res.status(400).send("Something went wrong")
-    }
+    res.send("Connection request sent")
 })
 
-//GET example2 - get all the users from the db
-app.get("/feed", async (req, res) => {
-
-    try {
-
-        const users = await User.find({});
-
-        res.send(users)
-
-    } catch (err) {
-        res.status(400).send("Something went wrong")
-    }
-})
-
-// DELETE example - delete one user from db
-app.delete("/user", async (req, res) => {
-
-    const userId = req.body.userId;
-
-    try {
-        const user = await User.findByIdAndDelete(userId)
-
-        res.send("User deleted successfully")
-    } catch (err) {
-        res.status(400).send("Something went wrong")
-    }
-
-})
-
-// PATCH example - 
-app.patch("/user", async (req, res) => {
-
-    const userId = req.body.userId;
-    const updatedData = {
-        emailId: req.body.emailId
-    };
-
-    try {
-        const user = await User.findByIdAndUpdate(userId, updatedData, {
-            returnDocument: "after",
-            runValidators: true,
-        })
-
-        res.send("User updated successfully")
-    } catch (err) {
-        res.status(400).send("Errorr: " + err.message)
-    }
-
-})
 
 // Rule: Connect/Establish database connection first then start server/listening port requests
 connectDB().then(() => {
