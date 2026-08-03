@@ -1,7 +1,5 @@
 const bcrypt = require("bcrypt");
 
-
-
 const hashPassword = async (req) => {
 
     const { password } = req.body
@@ -11,7 +9,6 @@ const hashPassword = async (req) => {
    return passwordHash;
 
 }
-
 
 module.exports = {
     hashPassword,
