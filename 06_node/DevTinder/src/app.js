@@ -26,7 +26,6 @@ app.post("/signup", async (req, res) => {
 
         //encrypt pass
         const passHash = await hashPassword(req);
-        console.log(passHash)
 
         const {
             firstName,
@@ -92,7 +91,6 @@ app.post("/login", async (req, res) => {
 
             const token = await user.getJWT()
 
-            console.log(token)
 
             //Add the token to cookie and send the res back to user
             res.cookie("token", token)
