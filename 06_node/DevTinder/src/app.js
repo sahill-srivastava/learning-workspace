@@ -126,15 +126,6 @@ app.get("/profile", userAuth, async (req, res) => {
 })
 
 
-app.post("/sendConnectionRequest", async (req, res) => {
-
-
-    //sending a connection request
-    console.log("Sending a connection request")
-
-    res.send("Connection request sent")
-})
-
 
 // Rule: Connect/Establish database connection first then start server/listening port requests
 connectDB().then(() => {
