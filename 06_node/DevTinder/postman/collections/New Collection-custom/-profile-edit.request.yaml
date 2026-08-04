@@ -1,5 +1,5 @@
 $kind: http-request
-name: /user
+name: /profile/edit
 url: http://localhost:3000/user
 method: PATCH
 body:
@@ -11,4 +11,4 @@ body:
     \    \"emailId\": \"sahil@gmail.com\"\r
 
     }"
-order: 7000
+order: 7257
