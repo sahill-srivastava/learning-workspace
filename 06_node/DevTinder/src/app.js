@@ -33,8 +33,3 @@ connectDB().then(() => {
     console.log("db not connected")
     console.log(err.message)
 })
-
-
-
-
-
