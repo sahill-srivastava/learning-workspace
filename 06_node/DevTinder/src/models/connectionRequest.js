@@ -23,6 +23,11 @@ const connectionRequestSchema = new mongoose.Schema({
         timestamps: true
     })
 
+
+//setting compound index
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
+
+//checking elon = elon using pre()
 connectionRequestSchema.pre("save", function () {
     const connnectionRequest = this;
 

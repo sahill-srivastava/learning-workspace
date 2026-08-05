@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        index: true
     },
     lastName: {
         type: String
@@ -50,6 +51,9 @@ const userSchema = mongoose.Schema({
         type: [String],
     }
 }, { timestamps: true })
+
+
+
 
 
 userSchema.methods.getJWT = async function () {
