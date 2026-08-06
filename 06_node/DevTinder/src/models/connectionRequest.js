@@ -28,15 +28,27 @@ const connectionRequestSchema = new mongoose.Schema({
 connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
 
 //checking elon = elon using pre()
+// connectionRequestSchema.pre("save", function (next) {
+
+//     const connectionRequest = this;
+
+//     if (connectionRequest.fromUserId.equals(connectionRequest.toUserId)) {
+//         throw new Error("Cannot send connection request to yourself.")
+//     }
+
+//     next();
+// })
+
 connectionRequestSchema.pre("save", function () {
-    const connnectionRequest = this;
+
+    const connectionRequest = this;
 
     if (connectionRequest.fromUserId.equals(connectionRequest.toUserId)) {
-        throw new Error("Cannot send connection request to yourself.")
+        throw new Error("Cannot send connection request to yourself.");
     }
 
-    next();
-})
+    
+});
 
 
 

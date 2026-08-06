@@ -6,6 +6,7 @@ const User = require("../models/user");
 
 const requestRouter = express.Router();
 
+//sender side requests
 requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res) => {
 
     try {
@@ -21,8 +22,8 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
 
         //Existing User in db
         const toUser = await User.findById(toUserId);
-        if(!toUser) {
-            return res.status(400).json({ message: "User not found"});
+        if (!toUser) {
+            return res.status(400).json({ message: "User not found" });
         }
 
         // Existing Request Validation
@@ -56,5 +57,43 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
 
 })
 
+
+//receiver side requests
+requestRouter.post("/request/review/:status/:requestId", userAuth, async (req, res) => {
+
+    try {
+
+        const loggedInUser = req.user;
+        const { status, requestId } = req.params;
+
+        //validate status
+        const allowedStatus = ["accepted", "rejected"];
+        if (!allowedStatus.includes(status)) {
+            return res.status(400).json({ message: "Status not allowed!" + status })
+        }
+
+        //req.id is present in db or not
+        const connectionRequest = await ConnectionRequest.findOne({
+            _id: requestId,
+            toUserId: loggedInUser._id,
+            status: "interested"
+        })
+
+
+        if (!connectionRequest) {
+            return res.status(404).json({ message: "Connection request not found" })
+        }
+
+        connectionRequest.status = status;
+
+        const data = await connectionRequest.save();
+
+        res.json({ message: "Connection request " + status, data })
+
+    } catch (err) {
+        res.status(400).send("ERROR : " + err.message)
+    }
+
+});
 
 module.exports = requestRouter;

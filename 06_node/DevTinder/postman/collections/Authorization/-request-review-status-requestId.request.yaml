@@ -1,0 +1,8 @@
+$kind: http-request
+name: /request/review/:status/:requestId
+url: http://localhost:3000/request/send/:status/:toUserId
+method: POST
+pathVariables:
+  status: ""
+  toUserId: ""
+order: 1285370322883038
