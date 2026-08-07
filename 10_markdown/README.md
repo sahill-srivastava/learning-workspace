@@ -73,3 +73,9 @@ Press <kbd>Ctrl</kbd> + <kbd>C</kbd>
 <!-- highlight - supported in few editors -->
 
 ==Important==
+
+<!-- exam -->
+
+# Exam Notice
+
+- Doing Accounting exam - part1

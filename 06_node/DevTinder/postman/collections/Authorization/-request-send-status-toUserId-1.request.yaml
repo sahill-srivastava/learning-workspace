@@ -5,4 +5,4 @@ method: POST
 pathVariables:
   status: ""
   toUserId: ""
-order: 6402
+order: 6000

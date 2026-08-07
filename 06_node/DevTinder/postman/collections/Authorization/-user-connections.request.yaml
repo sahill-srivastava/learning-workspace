@@ -1,0 +1,5 @@
+$kind: http-request
+name: /user/connections
+url: http://localhost:3000/user/connections
+method: GET
+order: 8059
