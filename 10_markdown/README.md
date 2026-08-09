@@ -79,3 +79,4 @@ Press <kbd>Ctrl</kbd> + <kbd>C</kbd>
 # Exam Notice
 
 - Doing Accounting exam - part1
+- Doing Image Processing exam
