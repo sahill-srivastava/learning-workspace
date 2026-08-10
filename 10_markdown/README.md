@@ -80,3 +80,4 @@ Press <kbd>Ctrl</kbd> + <kbd>C</kbd>
 
 - Doing Accounting exam - part1
 - Doing Image Processing exam
+- Doing Computer Network exam
