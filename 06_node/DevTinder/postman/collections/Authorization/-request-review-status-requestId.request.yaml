@@ -1,8 +1,5 @@
 $kind: http-request
 name: /request/review/:status/:requestId
-url: http://localhost:3000/request/send/:status/:toUserId
+url: http://localhost:3000/request/review/accepted/6a72bf634532a5587d2d7910
 method: POST
-pathVariables:
-  status: ""
-  toUserId: ""
 order: 7000

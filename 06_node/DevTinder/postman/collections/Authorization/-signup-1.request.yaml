@@ -5,5 +5,17 @@ url: http://localhost:3000/signup
 method: POST
 body:
   type: json
-  content: ""
+  content: "{\r
+
+    \    \"firstName\": \"Virat\",\r
+
+    \    \"lastName\": \"Kohli\",\r
+
+    \    \"emailId\": \"virat@gmail.com\",\r
+
+    \    \"password\": \"Virat@123\",\r
+
+    \    \"age\": 45\r
+
+    }"
 order: 1000

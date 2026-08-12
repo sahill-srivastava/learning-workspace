@@ -6,7 +6,7 @@ const userRouter = express.Router();
 const USER_SAFE_DATA = "firstName lastName photUrl age gender about skills";
 
 // Get all the pending connection requuest for the logginIn user
-userRouter.get("/user/requests/received", userAuth, async (req, res) => {
+userRouter.get("/user/requests", userAuth, async (req, res) => {
 
     try {
         const loggedInUser = req.user;
@@ -16,7 +16,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
             status: "interested"
         }).populate("fromUserId", USER_SAFE_DATA)
 
-        res.json({message: "Data fetched successfully", data: connectionRequest})
+        res.json({ message: "Data fetched successfully", data: connectionRequest })
 
     } catch (err) {
         res.status(400).send("ERROR : " + err.message);
@@ -24,7 +24,7 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
 })
 
 
-userRouter.get("/user/connections", userAuth, async(req, res) => {
+userRouter.get("/user/connections", userAuth, async (req, res) => {
 
     try {
 
@@ -32,16 +32,25 @@ userRouter.get("/user/connections", userAuth, async(req, res) => {
 
         const connectionRequests = await ConnectionRequestModel.find({
             $or: [
-                {toUserId: loggedInUser._id, status: "accepted"},
-                { fromUserId: loggedInUser._id, status: "accepted"},
+                { toUserId: loggedInUser._id, status: "accepted" },
+                { fromUserId: loggedInUser._id, status: "accepted" },
             ]
-        }).populate("fromUserId", USER_SAFE_DATA)
+        }).populate("fromUserId", USER_SAFE_DATA).populate("toUserId", USER_SAFE_DATA)
 
-        res.json({data: connectionRequests})
+        const data = connectionRequests.map((row) => {
+            
+            if(row.fromUserId._id.toString() === loggedInUser._id.toString()) {
+                return row.toUserId;
+            }
+
+            return row.fromUserId;
+        })
+
+        res.json({ data })
 
 
     } catch (err) {
-        res.status(400).json({ message: err.message})
+        res.status(400).json({ message: err.message })
     }
 })
 module.exports = userRouter

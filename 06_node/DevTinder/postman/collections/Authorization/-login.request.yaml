@@ -5,5 +5,11 @@ url: http://localhost:3000/login
 method: POST
 body:
   type: json
-  content: ""
+  content: "{\r
+
+    \    \"emailId\": \"virat@gmail.com\",\r
+
+    \    \"password\": \"Virat@123\"\r
+
+    }"
 order: 2000
