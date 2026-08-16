@@ -76,8 +76,6 @@ Press <kbd>Ctrl</kbd> + <kbd>C</kbd>
 
 <!-- exam -->
 
-# Exam Notice
+# Dear Diary
 
-- Doing Accounting exam - part1
-- Doing Image Processing exam
-- Doing Computer Network exam
+Aug16 - Making posts. 
