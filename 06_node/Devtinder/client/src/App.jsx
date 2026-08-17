@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./Navbar";
 import Login from "./Login";
 import Profile from "./Profile";
 import Body from "./Body";
@@ -15,8 +14,6 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-      <Navbar />
-      <h1 className="text-6xl">Hello World</h1>
     </>
   );
 };
