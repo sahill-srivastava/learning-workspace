@@ -1,8 +1,25 @@
+import axios from "axios";
 import { useState } from "react";
 
 const Login = () => {
-  const [emailId, setEmaiId] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailId, setEmaiId] = useState("sahil@gmail.com");
+  const [password, setPassword] = useState("Sahil@123");
+
+  const handleLogin = async () => {
+     try {
+
+       const res = await axios.post("http://localhost:3000/login", {
+          emailId, password
+        })
+
+        console.log(res)
+
+     } catch (err) {
+       console.log(err)
+     }
+  }
+
+
   return (
     <div className="flex justify-center my-10 ">
       <div className="card bg-base-300 w-96 shadow-sm">
@@ -34,7 +51,9 @@ const Login = () => {
             </fieldset>
           </div>
           <div className="card-actions justify-center mt-5">
-            <button className="btn btn-primary">Log In</button>
+            <button
+            onClick={handleLogin}
+            className="btn btn-primary">Log In</button>
           </div>
         </div>
       </div>
