@@ -1,24 +1,37 @@
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
-  const [emailId, setEmaiId] = useState("sahil@gmail.com");
+  const [emailId, setEmailId] = useState("sahil@gmail.com");
   const [password, setPassword] = useState("Sahil@123");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
-     try {
+    try {
 
-       const res = await axios.post("http://localhost:3000/login", {
-          emailId, password
-        }, {withCredentials: true})
+      const res = await axios.post(
+        BASE_URL + "/login",
+        {
+          emailId,
+          password,
+        },
+        { withCredentials: true },
+      );
 
-        console.log(res)
+      dispatch(addUser(res.data));
+      return navigate("/");
 
-     } catch (err) {
-       console.log(err)
-     }
-  }
-
+    } catch (err) {
+      console.log(err);
+      console.log(err.response?.data);
+      console.log(err.response?.status);
+    }
+  };
 
   return (
     <div className="flex justify-center my-10 ">
@@ -34,7 +47,7 @@ const Login = () => {
                   value={emailId}
                   type="text"
                   className="input"
-                  onChange={(e) => setEmaiId(e.target.value)}
+                  onChange={(e) => setEmailId(e.target.value)}
                 />
               </div>
 
@@ -51,9 +64,9 @@ const Login = () => {
             </fieldset>
           </div>
           <div className="card-actions justify-center mt-5">
-            <button
-            onClick={handleLogin}
-            className="btn btn-primary">Log In</button>
+            <button onClick={handleLogin} className="btn btn-primary">
+              Log In
+            </button>
           </div>
         </div>
       </div>
