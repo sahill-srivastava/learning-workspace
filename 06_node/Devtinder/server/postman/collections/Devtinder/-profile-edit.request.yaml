@@ -1,14 +1,8 @@
 $kind: http-request
 name: /profile/edit
-url: http://localhost:3000/user
+url: http://localhost:3000/profile/edit
 method: PATCH
 body:
   type: json
-  content: "{\r
-
-    \    \"userId\": \"6a645863399cd96c1e2f0d6b\",\r
-
-    \    \"emailId\": \"sahil@gmail.com\"\r
-
-    }"
+  content: "{\r\n    \"age\": 32\r\n}"
 order: 5000

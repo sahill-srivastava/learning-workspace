@@ -1,19 +1,19 @@
 const UserCard = ({user}) => {
-    console.log("user: ", user)
+    const {photoUrl, firstName, lastName, age, about, gender} = user;
   return (
     <div className="card bg-base-200 w-96 shadow-sm">
       <figure className="px-10 pt-10">
         <img
-          src={user?.photoUrl}
-          alt={user?.firstName + " pic"}
+          src={photoUrl}
+          alt={firstName + " pic"}
           className="rounded-xl"
         />
       </figure>
       <div className="card-body items-center text-center">
-        <h2 className="card-title">{user?.firstName + " " + user?.lastName}</h2>
+        <h2 className="card-title">{firstName + " " + lastName}</h2>
+        {age && gender && <p>{age + ", " + gender}</p>}
         <p>
-          A card component has a figure, a body part, and inside body there are
-          title and actions parts
+          {about}
         </p>
         <div className="card-actions gap-4 mt-4">
           <button className="btn btn-primary">Interested</button>
