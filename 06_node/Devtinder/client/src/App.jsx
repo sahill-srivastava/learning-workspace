@@ -5,6 +5,7 @@ import Body from "./components/Body";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Feed from "./components/Feed";
+import Connections from "./components/Connections";
 
 const App = () => {
   return (
@@ -16,6 +17,8 @@ const App = () => {
               <Route path="/" element={<Feed />} />
               <Route path="login" element={<Login />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="connections" element={<Connections />} />
+              <Route path="requests" element={<Profile />} />
             </Route>
           </Routes>
         </BrowserRouter>
