@@ -79,3 +79,4 @@ Press <kbd>Ctrl</kbd> + <kbd>C</kbd>
 # Dear Diary
 
 Aug16 - Making posts. 
+Aug30 - Rest
