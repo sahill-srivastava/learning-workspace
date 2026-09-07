@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express")
 const connectDB = require("./config/database")
 const app = express();
@@ -32,7 +33,7 @@ connectDB().then(() => {
     console.log("db connected")
 
     //listen port requests
-    app.listen(3000, () => {
+    app.listen(process.env.PORT, () => {
         console.log("Server is successfully listening on port 3000...");
     });
 
