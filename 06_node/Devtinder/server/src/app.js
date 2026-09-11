@@ -4,7 +4,7 @@ const connectDB = require("./config/database")
 const app = express();
 const cookieParser = require("cookie-parser")
 const cors = require("cors");
-require("./utils/cronjob")
+// require("./utils/cronjob")
 
 
 //Middlewares

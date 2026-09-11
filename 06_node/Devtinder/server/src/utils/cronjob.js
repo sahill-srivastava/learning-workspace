@@ -22,9 +22,9 @@ cron.schedule("0 8 * * *", () => {
 
         const listOfEmails = [...new Set(pendingRequests.map(req => req.toUserIds.emailId))];
 
-        for(const email of listOfEmails) {
+        for (const email of listOfEmails) {
             // Send Emails
-            
+
         }
 
     } catch (err) {
