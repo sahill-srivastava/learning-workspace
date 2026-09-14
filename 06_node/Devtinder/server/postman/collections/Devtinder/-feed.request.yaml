@@ -2,4 +2,4 @@ $kind: http-request
 name: /feed
 url: http://localhost:3000/feed
 method: GET
-order: 9935
+order: 11000
