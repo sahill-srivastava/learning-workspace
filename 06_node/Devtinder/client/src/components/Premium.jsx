@@ -1,18 +1,23 @@
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Premium = () => {
-  const [isPremium, setIsPremium] = useState(false)
+  const [isPremium, setIsPremium] = useState(false);
 
   const verifyPremiumUser = async () => {
-    const res = await axios.get(BASE_URL + "/premium/verify", {withCredentials: true});
+    const res = await axios.get(BASE_URL + "/premium/verify", {
+      withCredentials: true,
+    });
 
-    if(res.data.isPremium) {
-      setIsPremium(true)
+    if (res.data.isPremium) {
+      setIsPremium(true);
     }
+  };
 
-  }
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
 
   const handleSubscribeClick = async (type) => {
     const order = await axios.post(
@@ -48,7 +53,10 @@ const Premium = () => {
     const rzp = new window.Razorpay(options);
     rzp.open();
   };
-  return  isPremium ? "You're already a Premium User." :  (<div className="mx-auto w-fit h-fit gap-5 mt-20 grid grid-cols-1 md:grid-cols-2">
+  return isPremium ? (
+    "You're already a Premium User."
+  ) : (
+    <div className="mx-auto w-fit h-fit gap-5 mt-20 grid grid-cols-1 md:grid-cols-2">
       {/* card1 */}
       <div className="card w-96 h-full bg-base-300 shadow-sm">
         <div className="card-body">
@@ -223,7 +231,8 @@ const Premium = () => {
           </div>
         </div>
       </div>
-    </div>);
+    </div>
+  );
 };
 
 export default Premium;
