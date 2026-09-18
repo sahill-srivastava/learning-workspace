@@ -5,6 +5,7 @@ const app = express();
 const cookieParser = require("cookie-parser")
 const cors = require("cors");
 // require("./utils/cronjob")
+const http = require("http")
 
 
 //Middlewares
@@ -31,12 +32,14 @@ app.use("/", userRouter)
 app.use("/", paymentRouter)
 
 
+const server = http.createServer(app)
+
 // Rule: Connect/Establish database connection first then start server/listening port requests
 connectDB().then(() => {
     console.log("db connected")
 
     //listen port requests
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
         console.log("Server is successfully listening on port 3000...");
     });
 
