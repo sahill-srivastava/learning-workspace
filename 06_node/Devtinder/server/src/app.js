@@ -5,7 +5,7 @@ const app = express();
 const cookieParser = require("cookie-parser")
 const cors = require("cors");
 // require("./utils/cronjob")
-const http = require("http")
+const http = require("node:http")
 
 
 //Middlewares
@@ -23,6 +23,7 @@ const profileRouter = require("./routes/profile")
 const requestRouter = require("./routes/requests");
 const userRouter = require("./routes/user");
 const paymentRouter = require("./routes/payment");
+const initializeSocket = require('./utils/socket');
 
 
 app.use("/", authRouter)
@@ -31,8 +32,8 @@ app.use("/", requestRouter)
 app.use("/", userRouter)
 app.use("/", paymentRouter)
 
-
 const server = http.createServer(app)
+initializeSocket(server);
 
 // Rule: Connect/Establish database connection first then start server/listening port requests
 connectDB().then(() => {
