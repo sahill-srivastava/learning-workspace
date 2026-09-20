@@ -7,9 +7,9 @@ body:
   type: json
   content: "{\r
 
-    \    \"emailId\": \"virat@gmail.com\",\r
+    \    \"emailId\": \"elon@gmail.com\",\r
 
-    \    \"password\": \"Virat@123\"\r
+    \    \"password\": \"Elon@123\"\r
 
     }"
 order: 2000

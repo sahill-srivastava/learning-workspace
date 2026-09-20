@@ -7,15 +7,21 @@ body:
   type: json
   content: "{\r
 
-    \    \"firstName\": \"Virat\",\r
+    \    \"firstName\": \"Donald\",\r
 
-    \    \"lastName\": \"Kohli\",\r
+    \    \"lastName\": \"Trump\",\r
 
-    \    \"emailId\": \"virat@gmail.com\",\r
+    \    \"emailId\": \"donald@gmail.com\",\r
 
-    \    \"password\": \"Virat@123\",\r
+    \    \"password\": \"Donald@123\",\r
 
-    \    \"age\": 45\r
+    \    \"age\": 63,\r
+
+    \    \"gender\": \"male\",\r
+
+    \    \"photoUrl\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29_%28cropped%29%282%29.jpg/500px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29_%28cropped%29%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail\",\r
+
+    \    \"skills\": [\"US President\", \"Politician\"]\r
 
     }"
 order: 1000

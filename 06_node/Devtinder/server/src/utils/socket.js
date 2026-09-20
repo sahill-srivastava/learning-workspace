@@ -11,6 +11,19 @@ const initializeSocket = (server) => {
 
     io.on("connection", (socket) => {
         // Handle events
+
+        socket.on("joinChat", () => {
+
+        });
+
+        socket.on("sendMessage", () => {
+
+        });
+
+        socket.on("disconnect", () => {
+
+        });
+
     });
 }
 

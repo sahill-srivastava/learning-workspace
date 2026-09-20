@@ -4,5 +4,5 @@ url: http://localhost:3000/profile/edit
 method: PATCH
 body:
   type: json
-  content: "{\r\n    \"age\": 32\r\n}"
+  content: "{\r\n    \"gender\": \"female\"\r\n}"
 order: 5000

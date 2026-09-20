@@ -80,3 +80,4 @@ Press <kbd>Ctrl</kbd> + <kbd>C</kbd>
 
 Aug16 - Making posts. 
 Aug30 - Rest
+Sept 20 - Reanalze Goals/Direction

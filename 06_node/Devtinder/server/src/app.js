@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors");
 // require("./utils/cronjob")
 const http = require("node:http")
+const initializeSocket = require('./utils/socket');
+
 
 
 //Middlewares
@@ -23,7 +25,6 @@ const profileRouter = require("./routes/profile")
 const requestRouter = require("./routes/requests");
 const userRouter = require("./routes/user");
 const paymentRouter = require("./routes/payment");
-const initializeSocket = require('./utils/socket');
 
 
 app.use("/", authRouter)
