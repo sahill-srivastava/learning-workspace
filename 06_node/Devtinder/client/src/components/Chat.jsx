@@ -1,11 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { createSocketConnection } from "../utils/socket";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
   const { targetUserId } = useParams();
-  console.log(targetUserId);
 
-  const [messages, setMessages] = useState([{ text: "Hello Sahil" }]);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const user = useSelector((store) => store.user);
+  const userId = user?._id;
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const socket = createSocketConnection();
+
+    //As soon as the page loads, the socket connection is made and joinChat event is emitted.
+    socket.emit("joinChat", {
+      firstName: user?.firstName,
+      userId,
+      targetUserId,
+    });
+
+    socket.on("messageReceived", ({ firstName, text }) => {
+      console.log(firstName, text);
+      setMessages((previousMessages) => [
+        ...previousMessages,
+        { firstName, text },
+      ]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [userId, targetUserId]);
+
+  const sendMessage = () => {
+    const socket = createSocketConnection();
+    socket.emit("sendMessage", {
+      firstName: user?.firstName,
+      userId,
+      targetUserId,
+      text: newMessage,
+    });
+
+    setNewMessage("");
+  };
+
   return (
     <section className="my-15">
       <h1 className="text-4xl text-center mb-5">Chat</h1>
@@ -23,7 +66,7 @@ const Chat = () => {
                   </div>
                 </div>
                 <div className="chat-header">
-                  Gunjan
+                  {msg.firstName}
                   <time className="text-xs opacity-50">12:45</time>
                 </div>
                 <div className="chat-bubble">{msg.text}</div>
@@ -31,8 +74,8 @@ const Chat = () => {
               </div>
             );
           })}
-          
-          <div className="chat chat-end">
+
+          {/* <div className="chat chat-end">
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
                 <img
@@ -47,11 +90,19 @@ const Chat = () => {
             </div>
             <div className="chat-bubble">I hate you!</div>
             <div className="chat-footer opacity-50">Seen at 12:46</div>
-          </div>
+          </div> */}
         </div>
         <div className="mt-5 flex gap-2">
-          <input type="text" className="flex-1 border border-white rounded" />
-          <button className="shrink-0 bg-sky-400 px-4 py-1 rounded">
+          <input
+            onChange={(e) => setNewMessage(e.target.value)}
+            value={newMessage}
+            type="text"
+            className="flex-1 border border-white rounded"
+          />
+          <button
+            onClick={sendMessage}
+            className="shrink-0 bg-sky-400 px-4 py-1 rounded"
+          >
             Send
           </button>
         </div>

@@ -1,5 +1,9 @@
 const { Server } = require("socket.io");
 
+const getRoomId = (userId, targetUserId) => {
+    return [userId, targetUserId].sort().join("_");
+};
+
 
 const initializeSocket = (server) => {
 
@@ -12,11 +16,30 @@ const initializeSocket = (server) => {
     io.on("connection", (socket) => {
         // Handle events
 
-        socket.on("joinChat", () => {
+        socket.on("joinChat", ({ firstName, userId, targetUserId }) => {
+
+             const roomId = getRoomId(userId, targetUserId);
+
+
+            console.log(firstName + " joined the room: " + roomId)
+
+
+
+            socket.join(roomId)
 
         });
 
-        socket.on("sendMessage", () => {
+        socket.on("sendMessage", ({
+            firstName,
+            userId,
+            targetUserId,
+            text,
+        }) => {
+
+             const roomId = getRoomId(userId, targetUserId);
+
+
+            io.to(roomId).emit("messageReceived", { firstName, text })
 
         });
 
