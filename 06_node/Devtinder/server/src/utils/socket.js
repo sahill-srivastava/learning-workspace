@@ -1,9 +1,9 @@
-const socket = require("socket.io")
+const { Server } = require("socket.io");
 
 
 const initializeSocket = (server) => {
 
-    const io = socket(server, {
+    const io = new Server(server, {
         cors: {
             origin: "http://localhost:5173",
         },
@@ -29,3 +29,7 @@ const initializeSocket = (server) => {
 
 
 module.exports = initializeSocket;
+
+
+
+
