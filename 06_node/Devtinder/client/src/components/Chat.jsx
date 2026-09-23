@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { createSocketConnection } from "../utils/socket";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const Chat = () => {
   const { targetUserId } = useParams();
@@ -11,6 +13,35 @@ const Chat = () => {
 
   const user = useSelector((store) => store.user);
   const userId = user?._id;
+
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages]);
+
+  const fetchChatMessages = async () => {
+    const chat = await axios.get(BASE_URL + "/chat/" + targetUserId, {
+      withCredentials: true,
+    });
+
+    // console.log(chat.data.messages);
+
+    const chatMessages = chat?.data?.messages.map((msg) => {
+      return {
+        firstName: msg?.senderId?.firstName,
+        lastName: msg?.senderId?.lastName,
+        text: msg?.text,
+      };
+    });
+    setMessages(chatMessages);
+  };
+
+  useEffect(() => {
+    fetchChatMessages();
+  }, []);
 
   useEffect(() => {
     if (!userId) return;
@@ -24,11 +55,10 @@ const Chat = () => {
       targetUserId,
     });
 
-    socket.on("messageReceived", ({ firstName, text }) => {
-      console.log(firstName, text);
+    socket.on("messageReceived", ({ firstName, lastName, text }) => {
       setMessages((previousMessages) => [
         ...previousMessages,
-        { firstName, text },
+        { firstName, lastName, text },
       ]);
     });
 
@@ -41,6 +71,7 @@ const Chat = () => {
     const socket = createSocketConnection();
     socket.emit("sendMessage", {
       firstName: user?.firstName,
+      lastName: user?.lastName,
       userId,
       targetUserId,
       text: newMessage,
@@ -52,21 +83,19 @@ const Chat = () => {
   return (
     <section className="my-15">
       <h1 className="text-4xl text-center mb-5">Chat</h1>
-      <div className="w-[680px] h-[60vh] flex flex-col mx-auto border-2 border-base-300 p-4 rounded-2xl">
-        <div className="flex-1 overflow-y-scroll">
+      <div className="w-[680px] h-[50vh] flex flex-col mx-auto border-2 border-base-300 p-4 rounded-2xl">
+        <div className="flex-1 overflow-y-auto">
           {messages.map((msg, index) => {
             return (
-              <div key={index} className="chat chat-start">
-                <div className="chat-image avatar">
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS chat bubble component"
-                      src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp"
-                    />
-                  </div>
-                </div>
+              <div
+                key={index}
+                className={
+                  "chat " +
+                  (user.firstName === msg.firstName ? "chat-end" : "chat-start")
+                }
+              >
                 <div className="chat-header">
-                  {msg.firstName}
+                  {msg.firstName + " " + msg.lastName}
                   <time className="text-xs opacity-50">12:45</time>
                 </div>
                 <div className="chat-bubble">{msg.text}</div>
@@ -74,6 +103,8 @@ const Chat = () => {
               </div>
             );
           })}
+
+          <div ref={bottomRef} />
 
           {/* <div className="chat chat-end">
             <div className="chat-image avatar">

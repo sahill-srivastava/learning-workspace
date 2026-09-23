@@ -2,4 +2,4 @@ $kind: http-request
 name: /request/review/:status/:requestId
 url: http://localhost:3000/request/review/accepted/6a893b77b84e6216084685b9
 method: POST
-order: 9000
+order: 8000

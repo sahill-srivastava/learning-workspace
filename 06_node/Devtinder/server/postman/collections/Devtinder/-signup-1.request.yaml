@@ -19,7 +19,12 @@ body:
 
     \    \"gender\": \"male\",\r
 
-    \    \"photoUrl\": \"https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29_%28cropped%29%282%29.jpg/500px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%282025%29_%28cropped%29%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail\",\r
+    \    \"photoUrl\":
+    \"https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Official_Presid\
+    ential_Portrait_of_President_Donald_J._Trump_%282025%29_%28cropped%29%282%2\
+    9.jpg/500px-Official_Presidential_Portrait_of_President_Donald_J._Trump_%28\
+    2025%29_%28cropped%29%282%29.jpg?utm_source=en.wikipedia.org&utm_campaign=p\
+    arser&utm_content=thumbnail\",\r
 
     \    \"skills\": [\"US President\", \"Politician\"]\r
 

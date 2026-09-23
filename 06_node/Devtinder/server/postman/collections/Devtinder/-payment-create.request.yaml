@@ -2,4 +2,4 @@ $kind: http-request
 name: /payment/create
 url: http://localhost:3000/payment/create
 method: POST
-order: 3230802175331364
+order: 12000

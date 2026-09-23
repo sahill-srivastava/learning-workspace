@@ -29,6 +29,7 @@ const initializeSocket = (server) => {
 
         socket.on("sendMessage", async ({
             firstName,
+            lastName,
             userId,
             targetUserId,
             text,
@@ -59,7 +60,7 @@ const initializeSocket = (server) => {
 
                 await chat.save();
 
-            io.to(roomId).emit("messageReceived", { firstName, text })
+            io.to(roomId).emit("messageReceived", { firstName, lastName, text })
 
 
             } catch (err) {
