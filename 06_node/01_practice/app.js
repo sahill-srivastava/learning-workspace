@@ -1,17 +1,26 @@
-// /promises is important for promised based api
 import fs from "node:fs/promises";
 
-console.log("1")
 
-//promise based readfile operation
-const fileReading = async () => {
+//access method
+const accessMethod = async () => {
+    try {
 
-    const data = await fs.readFile("data.txt", "utf-8")
+        //rename file
+        await fs.access("data.txt");
 
-    console.log(data)
+        console.log("file is accessible")
+
+    } catch (err) {
+        console.log("file is inaccessible")
+        console.log(err.message)
+    }
 }
 
-fileReading();
+accessMethod();
 
 
-console.log("2")
+
+
+
+
+
