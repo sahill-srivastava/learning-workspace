@@ -1,26 +1,6 @@
-import fs from "node:fs/promises";
+import fs from "node:fs";
 
-
-//access method
-const accessMethod = async () => {
-    try {
-
-        //rename file
-        await fs.access("data.txt");
-
-        console.log("file is accessible")
-
-    } catch (err) {
-        console.log("file is inaccessible")
-        console.log(err.message)
-    }
-}
-
-accessMethod();
-
-
-
-
-
-
-
+const watcher = fs.watch("./data.txt", (eventType, filename) => {
+    console.log(`Event: ${eventType}`);
+    console.log(`Filename: ${filename}`);
+});
