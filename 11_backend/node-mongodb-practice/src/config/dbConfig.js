@@ -3,8 +3,6 @@ import { MongoClient } from "mongodb";
 const uri = process.env.MONGODB_URI;
 const dbInstance = process.env.DB_NAME;
 
-console.log(uri)
-console.log(dbInstance)
 
 const client = new MongoClient(uri)
 
