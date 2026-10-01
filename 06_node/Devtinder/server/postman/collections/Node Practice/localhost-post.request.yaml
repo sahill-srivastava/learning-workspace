@@ -1,4 +1,5 @@
 $kind: http-request
+name: localhost/post
 url: ""
 method: GET
-order: 1789822175596
+order: 3000

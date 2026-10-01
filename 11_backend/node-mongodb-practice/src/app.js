@@ -6,29 +6,24 @@ const server = http.createServer(async (req, res) => {
     try {
 
 
-        //client will send one entry, and i will store that entry in db
 
-        if (req.method === "POST" && req.url === "/users") {
+        if (req.method === "GET" && req.url === "/users") {
 
-            //receiving body
-            let body = "";
+            let result = await users.updateMany({ role: "developer" }, {
+                $set: {
+                    verified: true
+                }
+            });
 
-            req.on("data", (chunk) => {
-                body += chunk;
-            })
 
-            req.on("end", async (chunk) => {
-                console.log("body1: ", body);
+            res.setHeader("Content-Type", "application/json")
 
-                const user = JSON.parse(body);
 
-                console.log(user)
-
-                await users.insertOne(user);
-
-                res.end("User added successfully")
-            })
-
+            const data = {
+                message: "Data found successfully",
+                users: result
+            }
+            res.end(JSON.stringify(data))
 
             return;
 
