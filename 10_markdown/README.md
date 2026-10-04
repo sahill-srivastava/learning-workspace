@@ -82,3 +82,4 @@ Aug16 - Making posts.
 Aug30 - Rest
 Sept 20 - Reanalze Goals/Direction
 Oct 1 - Attend OSEN - Copilot Dev Days Event
+Oct 4 - Watching Drishyam
