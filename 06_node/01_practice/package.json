@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch buffer.js"
+    "dev": "node --watch crypto.js"
   },
   "keywords": [],
   "author": "",
