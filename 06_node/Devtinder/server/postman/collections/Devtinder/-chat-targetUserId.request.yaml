@@ -1,5 +1,5 @@
 $kind: http-request
 name: /chat/:targetUserId
-url: http://localhost:3000/feed
+url: http://localhost:3000/chat/6a893879b84e6216084685b2
 method: GET
 order: 2184953504733217

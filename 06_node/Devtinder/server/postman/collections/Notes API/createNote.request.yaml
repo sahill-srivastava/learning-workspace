@@ -1,5 +1,4 @@
 $kind: http-request
-name: localhost/patch
 url: ""
 method: GET
-order: 2640
+order: 5000
