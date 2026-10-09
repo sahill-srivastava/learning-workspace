@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch os.js"
+    "dev": "node --watch process.js"
   },
   "keywords": [],
   "author": "",
