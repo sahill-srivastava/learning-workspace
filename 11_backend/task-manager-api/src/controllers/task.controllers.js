@@ -1,13 +1,28 @@
+import Task from "../models/task.model.js"
+
 //createTask
-export const createTask = (req, res) => {
+export const createTask = async (req, res) => {
     try {
 
-        console.log("hii")
+        //receive body
+        console.log(req.body)
 
-        res.send("hii")
 
-    } catch(err) {
+        //save to db
+        const user = await Task.create(req.body)
+
+
+        //send response
+        res.status(200).json({
+            message: "Task added successfully",
+            data: user,
+        })
+
+    } catch (err) {
         console.log(err)
+        res.status(404).json({
+            message: err.message,
+        })
     }
 }
 
@@ -19,7 +34,7 @@ export const getTasks = (req, res) => {
 
         res.send("hii")
 
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
 }
@@ -32,7 +47,7 @@ export const getSingleTask = (req, res) => {
 
         res.send("hii")
 
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
 }
@@ -45,7 +60,7 @@ export const updateTask = (req, res) => {
 
         res.send("hii")
 
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
 }
@@ -58,7 +73,7 @@ export const replaceTask = (req, res) => {
 
         res.send("hii")
 
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
 }
@@ -71,7 +86,7 @@ export const deleteTask = (req, res) => {
 
         res.send("hii")
 
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
 }
