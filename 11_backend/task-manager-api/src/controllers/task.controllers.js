@@ -4,13 +4,8 @@ import Task from "../models/task.model.js"
 export const createTask = async (req, res) => {
     try {
 
-        //receive body
-        console.log(req.body)
-
-
         //save to db
         const user = await Task.create(req.body)
-
 
         //send response
         res.status(200).json({
@@ -21,47 +16,76 @@ export const createTask = async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(404).json({
+            errorType: err.name,
             message: err.message,
         })
     }
 }
 
 //get tasks
-export const getTasks = (req, res) => {
+export const getTasks = async (req, res) => {
     try {
 
-        console.log("hii")
+        const tasks = await Task.find();
 
-        res.send("hii")
+        res.status(200).json({
+            message: "Tasks found successfully",
+            data: tasks
+        })
+
 
     } catch (err) {
         console.log(err)
+        res.status(404).json({
+            errorType: err.name,
+            message: err.message,
+        })
     }
 }
 
 //get single task
-export const getSingleTask = (req, res) => {
+export const getSingleTask = async (req, res) => {
     try {
 
-        console.log("hii")
+        const { id: _id } = req.params;
 
-        res.send("hii")
+        const task = await Task.findById({ _id })
+
+        res.status(200).json({
+            message: "Task Found successfully",
+            data: task
+        })
 
     } catch (err) {
         console.log(err)
+        res.status(404).json({
+            errorType: err.name,
+            message: err.message,
+
+        })
     }
 }
 
 //update task
-export const updateTask = (req, res) => {
+export const updateTask = async (req, res) => {
     try {
 
-        console.log("hii")
+        //receive 
+        const { id: _id } = req.params;
 
-        res.send("hii")
+        //search db
+        const task = await Task.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
+
+        res.status(200).json({
+            message: "Task updated successfully.",
+            data: task
+        })
 
     } catch (err) {
-        console.log(err)
+        res.status(404).json({
+            errorType: err.name,
+            message: err.message,
+        })
     }
 }
 
