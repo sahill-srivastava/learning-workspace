@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import Task from "../models/task.model.js"
 
 //createTask
@@ -49,7 +50,23 @@ export const getSingleTask = async (req, res) => {
 
         const { id: _id } = req.params;
 
+        //validate id
+        if (!mongoose.isObjectIdOrHexString(_id)) {
+            console.log("this is not an object id")
+
+            return res.status(404).json({
+                message: "Invalid id"
+            })
+        }
+
         const task = await Task.findById({ _id })
+
+        //validate task
+        if (!task) {
+            return res.status(404).json({
+                message: "task not found"
+            })
+        }
 
         res.status(200).json({
             message: "Task Found successfully",
@@ -73,8 +90,25 @@ export const updateTask = async (req, res) => {
         //receive 
         const { id: _id } = req.params;
 
+        //validate id
+        if (!mongoose.isObjectIdOrHexString(_id)) {
+            console.log("this is not an object id")
+
+            return res.status(404).json({
+                message: "Invalid id"
+            })
+        }
+
         //search db
         const task = await Task.findByIdAndUpdate(_id, req.body, { new: true, runValidators: true })
+
+         //validate task
+        if (!task) {
+            return res.status(404).json({
+                message: "task not found"
+            })
+        }
+
 
         res.status(200).json({
             message: "Task updated successfully.",
@@ -95,7 +129,24 @@ export const replaceTask = async (req, res) => {
 
         const { id: _id } = req.params;
 
+        //validate id
+        if (!mongoose.isObjectIdOrHexString(_id)) {
+            console.log("this is not an object id")
+
+            return res.status(404).json({
+                message: "Invalid id"
+            })
+        }
+
         const task = await Task.findOneAndReplace({ _id }, req.body, { returnDocument: "after", runValidators: true });
+
+         //validate task
+        if (!task) {
+            return res.status(404).json({
+                message: "task not found"
+            })
+        }
+
 
         res.status(200).json({
 
@@ -104,7 +155,7 @@ export const replaceTask = async (req, res) => {
         })
 
     } catch (err) {
-        res.status(200).json({
+        res.status(404).json({
             ErrorType: err.name,
             message: err.message
         })
@@ -117,7 +168,24 @@ export const deleteTask = async (req, res) => {
 
         const { id: _id } = req.params;
 
+        //validate id
+        if (!mongoose.isObjectIdOrHexString(_id)) {
+            console.log("this is not an object id")
+
+            return res.status(404).json({
+                message: "Invalid id"
+            })
+        }
+
         const task = await Task.findByIdAndDelete(_id)
+
+         //validate task
+        if (!task) {
+            return res.status(404).json({
+                message: "task not found"
+            })
+        }
+
 
         res.status(200).json({
             message: "Task deleted successfully",
@@ -125,7 +193,7 @@ export const deleteTask = async (req, res) => {
         })
 
     } catch (err) {
-        res.status(200).json({
+        res.status(404).json({
             ErrorType: err.name,
             message: err.message
         })
