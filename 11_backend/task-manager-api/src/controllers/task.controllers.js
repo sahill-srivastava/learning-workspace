@@ -90,27 +90,44 @@ export const updateTask = async (req, res) => {
 }
 
 //replace task
-export const replaceTask = (req, res) => {
+export const replaceTask = async (req, res) => {
     try {
 
-        console.log("hii")
+        const { id: _id } = req.params;
 
-        res.send("hii")
+        const task = await Task.findOneAndReplace({ _id }, req.body, { returnDocument: "after", runValidators: true });
+
+        res.status(200).json({
+
+            message: "Task replaced successfully",
+            data: task
+        })
 
     } catch (err) {
-        console.log(err)
+        res.status(200).json({
+            ErrorType: err.name,
+            message: err.message
+        })
     }
 }
 
 //delete task
-export const deleteTask = (req, res) => {
+export const deleteTask = async (req, res) => {
     try {
 
-        console.log("hii")
+        const { id: _id } = req.params;
 
-        res.send("hii")
+        const task = await Task.findByIdAndDelete(_id)
+
+        res.status(200).json({
+            message: "Task deleted successfully",
+            data: task
+        })
 
     } catch (err) {
-        console.log(err)
+        res.status(200).json({
+            ErrorType: err.name,
+            message: err.message
+        })
     }
 }
