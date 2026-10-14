@@ -9,6 +9,9 @@ loadEnv();
 
 
 //Routes
+import bookRouter from "./routes/book.routes.js";
+
+app.use("/api/books", bookRouter)
 
 
 

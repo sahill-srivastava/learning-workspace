@@ -1,0 +1,92 @@
+[
+  {
+    "title": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "isbn": "9780743273565",
+    "genre": "Classic Fiction",
+    "publishedYear": 1925,
+    "price": 299,
+    "available": true
+  },
+  {
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "isbn": "9780735211292",
+    "genre": "Self-Help",
+    "publishedYear": 2018,
+    "price": 450,
+    "available": true
+  },
+  {
+    "title": "The Alchemist",
+    "author": "Paulo Coelho",
+    "isbn": "9780061122415",
+    "genre": "Adventure",
+    "publishedYear": 1988,
+    "price": 350,
+    "available": false
+  },
+  {
+    "title": "Rich Dad Poor Dad",
+    "author": "Robert T. Kiyosaki",
+    "isbn": "9781612680194",
+    "genre": "Personal Finance",
+    "publishedYear": 1997,
+    "price": 399,
+    "available": true
+  },
+  {
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "isbn": "9780132350884",
+    "genre": "Programming",
+    "publishedYear": 2008,
+    "price": 650,
+    "available": true
+  },
+  {
+    "title": "Ikigai",
+    "author": "Hector Garcia",
+    "isbn": "9780143130727",
+    "genre": "Philosophy",
+    "publishedYear": 2016,
+    "price": 275,
+    "available": false
+  },
+  {
+    "title": "The Psychology of Money",
+    "author": "Morgan Housel",
+    "isbn": "9780857197689",
+    "genre": "Personal Finance",
+    "publishedYear": 2020,
+    "price": 399,
+    "available": true
+  },
+  {
+    "title": "Harry Potter and the Philosopher's Stone",
+    "author": "J. K. Rowling",
+    "isbn": "9780747532699",
+    "genre": "Fantasy",
+    "publishedYear": 1997,
+    "price": 499,
+    "available": true
+  },
+  {
+    "title": "The Pragmatic Programmer",
+    "author": "David Thomas",
+    "isbn": "9780135957059",
+    "genre": "Programming",
+    "publishedYear": 1999,
+    "price": 750,
+    "available": true
+  },
+  {
+    "title": "Wings of Fire",
+    "author": "A. P. J. Abdul Kalam",
+    "isbn": "9788173711466",
+    "genre": "Autobiography",
+    "publishedYear": 1999,
+    "price": 250,
+    "available": false
+  }
+]
