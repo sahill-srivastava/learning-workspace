@@ -1,24 +1,38 @@
 import User from "../models/user.model.js";
+import bcrypt from "bcrypt"
+import { validateSignUp } from "../utils.js";
 
-//register
-export const signUP = async (req, res) => {
+//signup
+export const signUp = async (req, res) => {
     try {
-        console.log(req.body)
-        const {name, email, password } = req.body;
 
-        //check required fields
-        if(!name || !email || !password){
-            return res.status(400).json({
-                message: "Name, email, password are required"
+        //Validate inputs
+        const { name, email, password: pass } = validateSignUp(req.body)
+
+        //check existing user
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            return res.status(409).json({
+                message: "Email is already registered"
             })
         }
 
-        //check existing user
-        const existingUser = await User.find({ email })
+        //Hash Password
+        const password = await bcrypt.hash(pass, 10)
 
-        res.send("signup")
+        const user = await User.create({ name, email, password });
+
+        res.status(201).json({
+            message: "User added successfully",
+            data: user
+        })
+
     } catch (err) {
-        console.log(err)
+        res.status(500).json({
+            error: err.name,
+            message: err.message,
+        })
     }
 }
 
