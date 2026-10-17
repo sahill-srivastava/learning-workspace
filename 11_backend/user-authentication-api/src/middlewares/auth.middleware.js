@@ -5,7 +5,7 @@ export const userAuth = (req, res, next) => {
         const token = req.cookies.token;
 
         if(!token) {
-            throw new Error ("Login Required")
+            throw new Error("Login Required")
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
