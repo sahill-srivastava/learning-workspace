@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt"
-import { validateSignUp } from "../utils.js";
+import jwt from "jsonwebtoken";
+import { validateLogIn, validateSignUp } from "../utils.js";
 
 //signup
 export const signUp = async (req, res) => {
@@ -40,9 +41,37 @@ export const signUp = async (req, res) => {
 export const logIn = async (req, res) => {
     try {
 
-        res.send("logIn")
+        const { email, password: pass } = validateLogIn(req.body)
+
+        //check email present in db
+        const userExists = await User.findOne({ email });
+
+        if (!userExists) {
+            throw new Error("Invalid Email")
+        }
+
+        //compare password using bcrypt
+        const { _id, password: hash } = userExists;
+        const isEmailPresent = await bcrypt.compare(pass, hash)
+
+
+        if (!isEmailPresent) {
+            throw new Error("Invalid email or password")
+        }
+
+        //create jwt token
+        const token = jwt.sign({ _id }, process.env.JWT_SECRET, { expiresIn: "10m" });
+
+        res.cookie("token", token)
+
+        res.status(200).json({
+            message: "Login successful",
+        })
     } catch (err) {
-        console.log(err)
+        res.status(500).json({
+            error: err.name,
+            message: err.message,
+        })
     }
 }
 

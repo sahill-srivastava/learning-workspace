@@ -35,3 +35,32 @@ export const validateSignUp = (body) => {
 
 }
 
+export const validateLogIn = (body) => {
+    let { email, password } = body;
+
+    if (!email) {
+        throw new Error("Email is required");
+    }
+
+    const normalizedEmail = email.trim();
+
+    if (!validator.isEmail(normalizedEmail)) {
+        throw new Error("Invalid Email")
+    }
+
+    if (!password) {
+        throw new Error("Password is required");
+    }
+
+    const normalizedPassword = password.trim();
+
+    if (!validator.isStrongPassword(normalizedPassword)) {
+        throw new Error("Invalid Password")
+    }
+
+    return {
+        email: normalizedEmail,
+        password: normalizedPassword
+    }
+
+}
