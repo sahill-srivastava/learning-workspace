@@ -84,3 +84,28 @@ export const logOut = async (req, res) => {
         console.log(err)
     }
 }
+
+//profile
+export const getProfile = async (req, res) => {
+    try {
+
+        const { _id } = req.user;
+        const user = await User.findOne({ _id })
+
+        if (!user) {
+            res.status(404).json({
+                message: "User Not Found"
+            })
+        }
+
+        res.status(200).json({
+            message: "User found successfully",
+            data: user
+        })
+    } catch (err) {
+        res.status(500).json({
+            error: err.name,
+            message: err.message,
+        })
+    }
+}
