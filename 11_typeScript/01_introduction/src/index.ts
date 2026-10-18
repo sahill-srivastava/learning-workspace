@@ -1,5 +1,5 @@
-function greet(name: string): string {
-  return `Hello, ${name}`;
+function sum(a: number, b: number): number {
+  return a + b;
 }
 
-console.log(greet("sahil"));
+console.log(sum(3, 2))
