@@ -1,7 +1,7 @@
 import validator from "validator"
 export const validateSignUp = (body) => {
-
     const {name, email, password} = body;
+
     if(!name) {
         throw new Error("Name is required");
     }
@@ -30,4 +30,30 @@ export const validateSignUp = (body) => {
         email: normalizedEmail,
         password
     };
+}
+
+//validate login
+export const validateLogIn = (body) => {
+    const { email, password } = body;
+
+    if(!email) {
+        throw new Error("Email is required");
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if(!validator.isEmail(normalizedEmail)){
+        throw new Error("Invalid Email")
+    }
+
+    if(!password) {
+        throw new Error("Password is required");
+    }
+
+    return {
+        email: normalizedEmail,
+        password
+    }
+
+
 }
