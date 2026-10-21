@@ -81,9 +81,10 @@ export const logIn = async (req, res) => {
 //logOut
 export const logOut = async (req, res) => {
     try {
+        res.clearCookie("token");
 
         res.status(200).json({
-            message: "logOut"
+            message: "Logout successful"
         })
     } catch (err) {
         res.status(500).json({
@@ -96,9 +97,18 @@ export const logOut = async (req, res) => {
 //getProfile
 export const getProfile = async (req, res) => {
     try {
+        const { _id } = req.user;
+
+        if (!_id) {
+            throw new Error("User not found")
+        }
+
+        const user = await User.findById(_id);
+
 
         res.status(200).json({
-            message: "getProfile"
+            message: "User Found Successfully",
+            data: user
         })
     } catch (err) {
         res.status(500).json({
