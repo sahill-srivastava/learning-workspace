@@ -18,7 +18,7 @@ export const createPost = async (req, res) => {
 
         const post = await Post.create({ title, content, author: _id });
 
-        res.status(201).json({ message: "post created", data: post })
+        res.status(201).json({ message: "post is created", data: post })
     } catch (err) {
         res.status(500).json({
             error: err.name,
@@ -30,10 +30,13 @@ export const createPost = async (req, res) => {
 //get all post
 export const getPosts = async (req, res) => {
     try {
+        const posts = await Post.find({});
 
+        if(!posts){
+            throw new Error("Posts not found")
+        }
 
-
-        res.status(200).json({ message: "getPosts" })
+        res.status(200).json({ message: "getPosts", data: posts })
     } catch (err) {
         res.status(500).json({
             error: err.name,
