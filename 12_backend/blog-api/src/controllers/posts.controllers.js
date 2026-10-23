@@ -117,8 +117,6 @@ export const updatePost = async (req, res) => {
 
         const updates = {};
 
-
-
         if (title !== undefined) {
             if (typeof title !== "string" || !title.trim()) {
                 return res.status(400).json({

@@ -14,9 +14,11 @@ loadEnv();
 //routes
 import authRouter from "./routes/auth.routes.js"
 import postRouter from "./routes/post.routes.js"
+import commentRouter from "./routes/comment.routes.js"
 
 app.use("/api/auth", authRouter)
 app.use("/api/posts", postRouter)
+app.use("/api", commentRouter)
 
 
 export default app;
