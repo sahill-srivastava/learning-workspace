@@ -94,7 +94,6 @@ export const getSinglePost = async (req, res) => {
             data: post
         })
     } catch (err) {
-        console.log(err)
         return res.status(500).json({
             success: false,
             message: "Internal server error"
@@ -147,7 +146,14 @@ export const updatePost = async (req, res) => {
             });
         }
 
-        const post = await Post.findByIdAndUpdate(id, updates, { returnDocument: "after", runValidators: true })
+        const post = await Post.findOneAndUpdate({_id: id, author: req.user._id}, updates, { returnDocument: "after", runValidators: true })
+
+        if(!post) {
+             return res.status(404).json({
+                success: false,
+                message: "Not Found"
+            });
+        }
 
         res.status(200).json({
             success: true,
@@ -174,7 +180,7 @@ export const deletePost = async (req, res) => {
             })
         }
 
-        const post = await Post.findByIdAndDelete(id);
+        const post = await Post.findOneAndDelete({_id: id, author: req.user._id});
 
         if (!post) {
             return res.status(404).json({
