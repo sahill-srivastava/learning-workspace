@@ -84,3 +84,4 @@ Sept 20 - Reanalze Goals/Direction
 Oct 1 - Attend OSEN - Copilot Dev Days Event
 Oct 4 - Watching Drishyam
 Oct 11 - Attended AI Infrastructure
+Oct 25 - Making Career Strategy , starting postgresql

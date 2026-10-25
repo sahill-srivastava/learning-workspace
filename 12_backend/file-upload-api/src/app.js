@@ -7,5 +7,9 @@ const app = express();
 app.use(express.json())
 loadEnv();
 
+//Routes
+import filesRouter from "./routes/files.routes.js"
+
+app.use("/api/files", filesRouter);
 
 export default app;
