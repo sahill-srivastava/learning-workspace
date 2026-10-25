@@ -6,7 +6,7 @@ const fileSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    fileName: {
+    filename: {
         type: String,
         required: true,
         trim: true,

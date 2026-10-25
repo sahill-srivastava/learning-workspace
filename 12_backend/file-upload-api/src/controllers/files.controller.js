@@ -2,6 +2,25 @@
 export const uploadFile = async (req, res) => {
     try {
         console.log("file :", req.file)
+        const {originalname, mimetype, path, filename, size} = req.file;
+
+        //validate file
+        if(size > 5 * 1024 * 1024) {
+            return res.status(400).json({
+                success: false,
+                message: "Max 5MB allowed"
+            })
+        }
+
+        const allowedMimetype = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+
+        if(!allowedMimetype.includes(mimetype)){
+             return res.status(400).json({
+                success: false,
+                message: "Only JPEG, PNG, WebP and PDF are allowed"
+            })
+        }
+
 
         res.status(201).json({
             success: true,
