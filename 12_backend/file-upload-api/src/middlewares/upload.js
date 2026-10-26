@@ -13,8 +13,22 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage, limits: 5 * 1024 * 1024 });
+const upload = multer({
+    storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    },
+    fileFilter: (req, file, cb) => {
+        console.log("filee : ", file)
+        const allowedMimetype = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+        if (allowedMimetype.includes(file.mimetype)) {
+            return cb(null, true);
 
-// const upload = multer({ dest: "./uploads"})
+        } else {
+            return cb(new Error("Only JPEG, PNG, WebP and PDF are allowed"))
+        }
+    }
+});
+
 
 export default upload;

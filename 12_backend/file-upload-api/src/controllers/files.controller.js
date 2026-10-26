@@ -1,25 +1,11 @@
 //file upload
-export const uploadFile = async (req, res) => {
+export const uploadFile = async (req, res, next) => {
     try {
-        console.log("file :", req.file)
+        console.log("reqfile :", req.file)
         const {originalname, mimetype, path, filename, size} = req.file;
 
         //validate file
-        if(size > 5 * 1024 * 1024) {
-            return res.status(400).json({
-                success: false,
-                message: "Max 5MB allowed"
-            })
-        }
-
-        const allowedMimetype = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
-
-        if(!allowedMimetype.includes(mimetype)){
-             return res.status(400).json({
-                success: false,
-                message: "Only JPEG, PNG, WebP and PDF are allowed"
-            })
-        }
+        
 
 
         res.status(201).json({
@@ -27,15 +13,12 @@ export const uploadFile = async (req, res) => {
             message: "File uploaded successfully"
         })
     } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        })
+        next(err)
     }
 }
 
 //get all files
-export const getFiles = async (req, res) => {
+export const getFiles = async (req, res, next) => {
     try {
 
         res.status(200).json({
@@ -43,15 +26,12 @@ export const getFiles = async (req, res) => {
             message: "Files found successfully"
         })
     } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        })
+       next(err)
     }
 }
 
 //get single files
-export const getFileById = async (req, res) => {
+export const getFileById = async (req, res, next) => {
     try {
 
         res.status(200).json({
@@ -59,15 +39,12 @@ export const getFileById = async (req, res) => {
             message: "File found successfully"
         })
     } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        })
+       next(err)
     }
 }
 
 //download file
-export const downloadFileById = async (req, res) => {
+export const downloadFileById = async (req, res, next) => {
     try {
 
         res.status(200).json({
@@ -75,15 +52,12 @@ export const downloadFileById = async (req, res) => {
             message: "Download successfully"
         })
     } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        })
+       next(err)
     }
 }
 
 //delete file
-export const deleteFileById = async (req, res) => {
+export const deleteFileById = async (req, res, next) => {
     try {
 
         res.status(200).json({
@@ -91,9 +65,6 @@ export const deleteFileById = async (req, res) => {
             message: "File deleted successfully"
         })
     } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: "Internal server error"
-        })
+       next(err)
     }
 }
