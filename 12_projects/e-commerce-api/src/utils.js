@@ -17,15 +17,27 @@ export const validateUser = (reqBody) => {
     if (!validator.isStrongPassword(password)) {
         throw new Error("Password must be strong and contain atleast 8 digits")
     }
-  
-    console.log(name)
-    console.log(email)
-    console.log(password)
-    console.log(role)
-    console.log(address)
+
+    //role
+    if (typeof role !== "string" || !role.trim()) {
+        throw new Error("Role is required")
+    }
+    const allowedRoles = ["user", "admin"];
+
+    if(!allowedRoles.includes(role.trim())){
+         throw new Error("Invalid role")
+    }
+
+    //address
+    if (typeof address !== "string" || !address.trim()) {
+        throw new Error("Address is required")
+    }
+
     return {
         name: name.trim(),
         email,
-        password
+        password,
+        role: role.trim(),
+        address: address.trim()
     };
 }
