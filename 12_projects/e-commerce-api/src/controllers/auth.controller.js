@@ -1,13 +1,11 @@
 import User from "../models/User.js"
-import { validateUser } from "../utils.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 //register
 export const registerUser = async (req, res, next) => {
     try {
-        //validate
-        const { name, email, password, role, address } = validateUser(req.body)
+        const { name, email, password, role, address } = req.body;
 
         //check user exists
         const existingUser = await User.findOne({ email });
@@ -54,7 +52,7 @@ export const loginUser = async (req, res, next) => {
             })
         }
 
-        const { _id, password: hash } = existingUser;
+        const { _id, password: hash, role } = existingUser;
 
         const isPasswordValid = await bcrypt.compare(password, hash)
 
@@ -66,7 +64,7 @@ export const loginUser = async (req, res, next) => {
         }
 
         //create jwt token
-        const token = jwt.sign({ _id }, process.env.JWT_SECRET);
+        const token = jwt.sign({ _id, role }, process.env.JWT_SECRET);
 
         res.cookie("token", token);
 
