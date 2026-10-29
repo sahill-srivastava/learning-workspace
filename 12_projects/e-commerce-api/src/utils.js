@@ -15,7 +15,7 @@ export const validateUser = (reqBody) => {
 
     //password
     if (!validator.isStrongPassword(password)) {
-        throw new Error("Password must be strong and contain atleast 8 digits")
+        throw new Error("Password cannot be empty and contain atleast 8 digits")
     }
 
     //role

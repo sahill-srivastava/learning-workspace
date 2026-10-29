@@ -1,5 +1,6 @@
 import User from "../models/User.js"
 import validator from "validator"
+import bcrypt from "bcrypt"
 
 //get profile
 export const getProfile = async (req, res, next) => {
@@ -133,7 +134,22 @@ export const deleteProfile = async (req, res, next) => {
 // updatePassword
 export const updatePassword = async (req, res, next) => {
     try {
+        const { password } = req.body;
 
+        //validate
+        if (!validator.isStrongPassword(password)) {
+            return res.status(400).json({
+                success: false,
+                message: "Password cannot be empty and contain atleast 8 digits"
+            })
+        }
+
+        //hash password
+        const hash = await bcrypt.hash(password, 10);
+
+        const { _id } = req.user;
+
+        await User.findByIdAndUpdate(_id, { password: hash }, { returnDocument: "after", runValidators: true })
 
         res.status(200).json({
             success: true,
