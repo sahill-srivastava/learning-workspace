@@ -1,3 +1,4 @@
+import Products from "../models/Products.js"
 
 //createProduct
 export const createProduct = async (req, res, next) => {
@@ -9,7 +10,7 @@ export const createProduct = async (req, res, next) => {
 
         res.status(201).json({
             success: true,
-            message: "Product created successfully"
+            message: "Product created successfully",
         })
     } catch (err) {
         next(err)

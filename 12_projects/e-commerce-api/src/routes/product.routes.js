@@ -2,10 +2,13 @@ import express from "express";
 import { createCategory, createProduct, deleteProduct, getAllProducts, getSingleProduct, updateProduct, uploadImages } from "../controllers/product.controller.js";
 import userAuth from "../middlewares/auth.middleware.js";
 import { adminAuth } from "../middlewares/adminAuth.middleware.js";
+import { validate } from "../middlewares/validate.middleware.js";
+import { productSchema } from "../validators/productValidator.js";
 
 const router = express.Router();
 
 router.post("/", userAuth, adminAuth, createProduct)
+// router.post("/", userAuth, adminAuth, validate(productSchema), createProduct)
 router.post("/images", userAuth, adminAuth, uploadImages)
 router.post("/category", userAuth, adminAuth, createCategory)
 router.get("/", getAllProducts)
