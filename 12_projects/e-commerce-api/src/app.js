@@ -2,6 +2,7 @@ import express from "express"
 import { loadEnv } from "./config/env.js";
 import cookieParser from "cookie-parser";
 
+
 const app = express();
 
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(express.json())
 loadEnv();
 app.use(cookieParser())
+
 
 
 //Routes

@@ -3,6 +3,7 @@ import Products from "../models/Products.js"
 //createProduct
 export const createProduct = async (req, res, next) => {
     try {
+        console.log(req.files)
         console.log(req.body)
         
 
