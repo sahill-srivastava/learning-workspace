@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary"
+import { loadEnv } from "./env.js";
 
-console.log("vv: ", process.env.CLOUDINARY_FOLDER_NAME)
+loadEnv();
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

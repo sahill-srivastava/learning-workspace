@@ -9,7 +9,8 @@ import upload from "../middlewares/upload.js";
 const router = express.Router();
 
 router.post("/", userAuth, adminAuth, upload.array("images", 5), createProduct)
-// router.post("/", userAuth, adminAuth, validate(productSchema), createProduct)
+// router.post("/", userAuth, adminAuth, upload.array("images", 5), validate(productSchema), createProduct)
+// router.post("/", userAuth, adminAuth, validate(productSchema), upload.array("images", 5), createProduct)
 router.post("/images", userAuth, adminAuth, uploadImages)
 router.post("/category", userAuth, adminAuth, createCategory)
 router.get("/", getAllProducts)
