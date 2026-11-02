@@ -1,32 +1,24 @@
 import mongoose from "mongoose";
 
 const imageSchema = new mongoose.Schema({
-    originalname: {
+    originalName: {
         type: String,
         required: true,
         trim: true
     },
-    filename: {
+    publicId: {
         type: String,
         required: true,
-        trim: true
+        unique: true
     },
-    mimetype: {
+    url: {
         type: String,
-        required: true,
-        enum: ["image/jpeg", "image/png", "image/webp"]
+        required: true
     },
     size: {
         type: Number,
         required: true,
-        min: 1,
-        max: 5 * 1024 * 1024
-    },
-    url: {
-        type: String,
-        required: true,
-        trim: true
-    },
+    }
 }, { timestamps: true });
 
 const Images = mongoose.model("Images", imageSchema);

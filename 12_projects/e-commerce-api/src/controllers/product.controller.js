@@ -1,10 +1,12 @@
+import Category from "../models/Categories.js"
+import Images from "../models/Image.js"
 import Products from "../models/Products.js"
 import { uploadToCloudinary } from "../utils/cloudinaryUpload.js"
 
 //createProduct
 export const createProduct = async (req, res, next) => {
     try {
-        // console.log(req.body)
+
         // console.log(req.files)
 
         if (!req.files || req.files.length === 0) {
@@ -21,59 +23,72 @@ export const createProduct = async (req, res, next) => {
 
                 const result = await uploadToCloudinary(file.buffer)
 
-                // console.log("result: ", result)
-
                 return {
+                    originalName: file.originalname,
+                    publicId: result.public_id,
                     url: result.secure_url,
-                    public_id: result.public_id
+                    size: result.bytes
                 };
 
             })
         )
 
-        console.log("uploadedImages: ", uploadedImages)
+        if (uploadedImages.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Product images are required"
+            })
+        }
+        const images = await Images.create(uploadedImages)
+
+        const imageIds = images.map(image => image._id) //imageIds
+
+        // console.log("image id: ", imageIds) 
+
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid data"
+            })
+        }
+
+        const { name, description, price, category, stock, isActive } = req.body;
+
+        console.log("cat: ", category)
+        const existingCategory = await Category.findOne({ name: category });
+
+        if (!existingCategory) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid category"
+            })
+        }
+
+        console.log("exist: ", existingCategory)
 
 
+
+        const product = await Products.create({
+            name,
+            description,
+            price,
+            images: imageIds,
+            category: existingCategory._id,
+            stock,
+            isActive
+        })
 
 
         res.status(201).json({
             success: true,
             message: "Product created successfully",
+            data: product
         })
     } catch (err) {
         next(err)
     }
 }
 
-//uploadImages
-export const uploadImages = async (req, res, next) => {
-    try {
-
-
-
-        res.status(201).json({
-            success: true,
-            message: "Images uploaded successfully"
-        })
-    } catch (err) {
-        next(err)
-    }
-}
-
-//createCategory
-export const createCategory = async (req, res, next) => {
-    try {
-
-
-
-        res.status(201).json({
-            success: true,
-            message: "Category created successfully"
-        })
-    } catch (err) {
-        next(err)
-    }
-}
 
 //getAllProducts
 export const getAllProducts = async (req, res, next) => {

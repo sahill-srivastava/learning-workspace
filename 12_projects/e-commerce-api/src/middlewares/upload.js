@@ -14,7 +14,7 @@ const fileFilter = (req, file, cb) => {
         "image/webp",
     ];
 
-    if(allowedTypes.includes(file.mimetype)){
+    if (allowedTypes.includes(file.mimetype)) {
         cb(null, true)
     } else {
         cb(new Error("File type not allowed"), false);
