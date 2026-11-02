@@ -1,18 +1,37 @@
+import mongoose from "mongoose"
 import Category from "../models/Categories.js"
 import Images from "../models/Image.js"
 import Products from "../models/Products.js"
 import { uploadToCloudinary } from "../utils/cloudinaryUpload.js"
+import cloudinary from "../config/cloudinary.js"
 
 //createProduct
 export const createProduct = async (req, res, next) => {
     try {
 
-        // console.log(req.files)
-
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({
                 success: false,
                 message: "Product images are required"
+            })
+        }
+
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid data"
+            })
+        }
+
+        const { name, description, price, category, stock, isActive } = req.body;
+
+        //Extract category id from db
+        const existingCategory = await Category.findOne({ name: category });
+
+        if (!existingCategory) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid category"
             })
         }
 
@@ -33,38 +52,9 @@ export const createProduct = async (req, res, next) => {
             })
         )
 
-        if (uploadedImages.length === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "Product images are required"
-            })
-        }
+        //Save images in db and extract ids
         const images = await Images.create(uploadedImages)
-
-        const imageIds = images.map(image => image._id) //imageIds
-
-        // console.log("image id: ", imageIds) 
-
-        if (Object.keys(req.body).length === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid data"
-            })
-        }
-
-        const { name, description, price, category, stock, isActive } = req.body;
-
-        console.log("cat: ", category)
-        const existingCategory = await Category.findOne({ name: category });
-
-        if (!existingCategory) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid category"
-            })
-        }
-
-        console.log("exist: ", existingCategory)
+        const imageIds = images.map(image => image._id)
 
 
 
@@ -94,11 +84,19 @@ export const createProduct = async (req, res, next) => {
 export const getAllProducts = async (req, res, next) => {
     try {
 
+        const products = await Products.find({});
 
+        if (products.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Products not found"
+            })
+        }
 
         res.status(201).json({
             success: true,
-            message: "Products found successfully"
+            message: "Products found successfully",
+            data: products
         })
     } catch (err) {
         next(err)
@@ -108,12 +106,28 @@ export const getAllProducts = async (req, res, next) => {
 //getSingleProduct
 export const getSingleProduct = async (req, res, next) => {
     try {
+        const id = req.params.id;
 
+        if (!mongoose.isObjectIdOrHexString(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Id"
+            })
+        }
 
+        const product = await Products.findById(id)
+
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            })
+        }
 
         res.status(201).json({
             success: true,
-            message: "Product found successfully"
+            message: "Product found successfully",
+            data: product
         })
     } catch (err) {
         next(err)
@@ -138,12 +152,40 @@ export const updateProduct = async (req, res, next) => {
 //deleteProduct
 export const deleteProduct = async (req, res, next) => {
     try {
+        const id = req.params.id;
+
+        if (!mongoose.isObjectIdOrHexString(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Id"
+            })
+        }
 
 
+        const existingProduct = await Products.findById(id).populate("images", "originalName publicId")
 
-        res.status(201).json({
+        if (!existingProduct) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            })
+        }
+
+        const product = await Products.findByIdAndDelete(id)
+
+        await Promise.allSettled(
+            existingProduct.images.map(async (image) => {
+                const { _id, publicId: public_id } = image;
+                await cloudinary.uploader.destroy(public_id)
+                await Images.findByIdAndDelete(_id)
+            })
+        )
+
+
+        res.status(200).json({
             success: true,
-            message: "Product deleted successfully"
+            message: "Product deleted successfully",
+            data: product
         })
     } catch (err) {
         next(err)
