@@ -7,6 +7,8 @@ import cloudinary from "../config/cloudinary.js"
 
 //createProduct
 export const createProduct = async (req, res, next) => {
+
+    let images = [];
     try {
 
         if (!req.files || req.files.length === 0) {
@@ -53,7 +55,7 @@ export const createProduct = async (req, res, next) => {
         )
 
         //Save images in db and extract ids
-        const images = await Images.create(uploadedImages)
+        images = await Images.create(uploadedImages)
         const imageIds = images.map(image => image._id)
 
         const product = await Products.create({
@@ -72,6 +74,15 @@ export const createProduct = async (req, res, next) => {
             data: product
         })
     } catch (err) {
+
+        await Promise.allSettled(
+            images.map(async (image) => {
+                const { _id, publicId: public_id } = image;
+                await cloudinary.uploader.destroy(public_id)
+                await Images.findByIdAndDelete(_id)
+            })
+        )
+
         next(err)
     }
 }
@@ -82,14 +93,7 @@ export const getAllProducts = async (req, res, next) => {
 
         const products = await Products.find({});
 
-        if (products.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "Products not found"
-            })
-        }
-
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Products found successfully",
             data: products
@@ -113,14 +117,8 @@ export const getSingleProduct = async (req, res, next) => {
 
         const product = await Products.findById(id)
 
-        if (!product) {
-            return res.status(404).json({
-                success: false,
-                message: "Product not found"
-            })
-        }
 
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Product found successfully",
             data: product
@@ -142,7 +140,7 @@ export const updateProduct = async (req, res, next) => {
             })
         }
 
-        if (Object.keys(req.body).length === 0) {
+        if (Object.keys(req.body).length === 0 && (!req.files || req.files.length > 0)) {
             return res.status(400).json({
                 success: false,
                 message: "At least one field must be provided"
@@ -160,43 +158,6 @@ export const updateProduct = async (req, res, next) => {
             })
         }
 
-
-        //update images
-        if (req.files.length > 0) {
-
-            // uploadToCloudinary
-            const uploadedImages = await Promise.all(
-
-                req.files.map(async (file) => {
-
-                    const result = await uploadToCloudinary(file.buffer)
-
-                    return {
-                        originalName: file.originalname,
-                        publicId: result.public_id,
-                        url: result.secure_url,
-                        size: result.bytes
-                    };
-
-                })
-            )
-
-            //Save images in db and extract ids
-            const images = await Images.create(uploadedImages)
-            const imageIds = images.map(image => image._id)
-            updates.images = imageIds
-
-            //delete old images
-            await Promise.allSettled(
-                existingProduct.images.map(async (image) => {
-                    const { _id, publicId: public_id } = image;
-                    await cloudinary.uploader.destroy(public_id)
-                    await Images.findByIdAndDelete(_id)
-                })
-            )
-
-        }
-
         //update category
         if (Object.hasOwn(req.body, "category")) {
             const { category } = req.body;
@@ -210,15 +171,51 @@ export const updateProduct = async (req, res, next) => {
                 })
             }
 
-            const updatedCategory = existingCategory._id;
             updates.category = existingCategory._id;
-
-
-
 
         }
 
+        //update images
+        const uploadedImages = await Promise.all(
+
+            req.files.map(async (file) => {
+
+                const result = await uploadToCloudinary(file.buffer)
+
+                return {
+                    originalName: file.originalname,
+                    publicId: result.public_id,
+                    url: result.secure_url,
+                    size: result.bytes
+                };
+
+            })
+        )
+
+        //Save images in db and extract ids
+        const images = await Images.create(uploadedImages)
+        const imageIds = images.map(image => image._id)
+        updates.images = imageIds
+
+
+        //update product
         const updatedProduct = await Products.findByIdAndUpdate(id, { $set: updates }, { returnDocument: "after", runValidators: true })
+
+        if (!updatedProduct) {
+            return res.status(500).json({
+                success: false,
+                message: "Product updation failed"
+            })
+        }
+
+        //delete old images
+        await Promise.allSettled(
+            existingProduct.images.map(async (image) => {
+                const { _id, publicId: public_id } = image;
+                await cloudinary.uploader.destroy(public_id)
+                await Images.findByIdAndDelete(_id)
+            })
+        )
 
         res.status(200).json({
             success: true,
@@ -258,6 +255,7 @@ export const deleteProduct = async (req, res, next) => {
                 const { _id, publicId: public_id } = image;
                 await cloudinary.uploader.destroy(public_id)
                 await Images.findByIdAndDelete(_id)
+
             })
         )
 
