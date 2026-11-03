@@ -3,17 +3,15 @@ import { createProduct, deleteProduct, getAllProducts, getSingleProduct, updateP
 import userAuth from "../middlewares/auth.middleware.js";
 import { adminAuth } from "../middlewares/adminAuth.middleware.js";
 import { validate } from "../middlewares/validate.middleware.js";
-import { productSchema } from "../validators/productValidator.js";
+import { patchProductSchema, productSchema } from "../validators/productValidator.js";
 import upload from "../middlewares/upload.js";
 
 const router = express.Router();
 
 router.post("/", userAuth, adminAuth, upload.array("images", 5), validate(productSchema), createProduct)
-// router.post("/", userAuth, adminAuth, upload.array("images", 5), createProduct)
-// router.post("/", userAuth, adminAuth, validate(productSchema), upload.array("images", 5), createProduct)
 router.get("/", getAllProducts)
 router.get("/:id", getSingleProduct)
-router.patch("/:id", userAuth, adminAuth, updateProduct)
+router.patch("/:id", userAuth, adminAuth, upload.array("images", 5), validate(patchProductSchema), updateProduct)
 router.delete("/:id", userAuth, adminAuth, deleteProduct)
 
 

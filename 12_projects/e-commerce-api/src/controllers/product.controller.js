@@ -56,8 +56,6 @@ export const createProduct = async (req, res, next) => {
         const images = await Images.create(uploadedImages)
         const imageIds = images.map(image => image._id)
 
-
-
         const product = await Products.create({
             name,
             description,
@@ -68,7 +66,6 @@ export const createProduct = async (req, res, next) => {
             isActive
         })
 
-
         res.status(201).json({
             success: true,
             message: "Product created successfully",
@@ -78,7 +75,6 @@ export const createProduct = async (req, res, next) => {
         next(err)
     }
 }
-
 
 //getAllProducts
 export const getAllProducts = async (req, res, next) => {
@@ -137,12 +133,97 @@ export const getSingleProduct = async (req, res, next) => {
 //updateProduct
 export const updateProduct = async (req, res, next) => {
     try {
+        const id = req.params.id;
+
+        if (!mongoose.isObjectIdOrHexString(id)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Id"
+            })
+        }
+
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "At least one field must be provided"
+            })
+        }
+
+        const updates = { ...req.body };
+
+        const existingProduct = await Products.findById(id).populate("images", "originalName publicId")
+
+        if (!existingProduct) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            })
+        }
+
+
+        //update images
+        if (req.files.length > 0) {
+
+            // uploadToCloudinary
+            const uploadedImages = await Promise.all(
+
+                req.files.map(async (file) => {
+
+                    const result = await uploadToCloudinary(file.buffer)
+
+                    return {
+                        originalName: file.originalname,
+                        publicId: result.public_id,
+                        url: result.secure_url,
+                        size: result.bytes
+                    };
+
+                })
+            )
+
+            //Save images in db and extract ids
+            const images = await Images.create(uploadedImages)
+            const imageIds = images.map(image => image._id)
+            updates.images = imageIds
+
+            //delete old images
+            await Promise.allSettled(
+                existingProduct.images.map(async (image) => {
+                    const { _id, publicId: public_id } = image;
+                    await cloudinary.uploader.destroy(public_id)
+                    await Images.findByIdAndDelete(_id)
+                })
+            )
+
+        }
+
+        //update category
+        if (Object.hasOwn(req.body, "category")) {
+            const { category } = req.body;
+
+            const existingCategory = await Category.findOne({ name: category });
+
+            if (!existingCategory) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Category not found"
+                })
+            }
+
+            const updatedCategory = existingCategory._id;
+            updates.category = existingCategory._id;
 
 
 
-        res.status(201).json({
+
+        }
+
+        const updatedProduct = await Products.findByIdAndUpdate(id, { $set: updates }, { returnDocument: "after", runValidators: true })
+
+        res.status(200).json({
             success: true,
-            message: "Product updated successfully"
+            message: "Product updated successfully",
+            data: updatedProduct
         })
     } catch (err) {
         next(err)
@@ -160,7 +241,6 @@ export const deleteProduct = async (req, res, next) => {
                 message: "Invalid Id"
             })
         }
-
 
         const existingProduct = await Products.findById(id).populate("images", "originalName publicId")
 
@@ -180,7 +260,6 @@ export const deleteProduct = async (req, res, next) => {
                 await Images.findByIdAndDelete(_id)
             })
         )
-
 
         res.status(200).json({
             success: true,

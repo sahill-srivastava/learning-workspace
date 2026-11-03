@@ -8,3 +8,13 @@ export const productSchema = z.object({
     stock: z.string({ error: "Stock is required" }).trim().min(1, { error: "Stock is required" }).pipe(z.coerce.number({ error: "Stock must be a number" }).int({ error: "Stock must be a whole number" }).nonnegative({ error: "Stock cannot be negative" })),
     isActive: z.enum(["true", "false"], { error: "Status must be true or false" }).transform((v) => v === "true").default(true)
 })
+
+
+export const patchProductSchema = z.object({
+    name: z.string({ error: "Product name is required" }).trim().nonempty({ error: "Product name is required" }).max(100, { error: "Name cannot exceed 100 characters" }).optional(),
+    description: z.string({ error: "Description is required" }).trim().nonempty({ error: "Description is required" }).max(200, { error: "Description cannot exceed 200 characters" }).optional(),
+    price: z.string({ error: "Price is required" }).trim().min(1, { error: "Price is required" }).pipe(z.coerce.number({ error: "Price must be a number" }).positive({ error: "Price must be greater than 0" })).optional(),
+    category: z.string({ error: "Category name is required" }).trim().nonempty({ error: "Category name is required" }).max(100, { error: "Category cannot exceed 100 characters" }).optional(),
+    stock: z.string({ error: "Stock is required" }).trim().min(1, { error: "Stock is required" }).pipe(z.coerce.number({ error: "Stock must be a number" }).int({ error: "Stock must be a whole number" }).nonnegative({ error: "Stock cannot be negative" })).optional(),
+    isActive: z.enum(["true", "false"], { error: "Status must be true or false" }).transform((v) => v === "true").optional()
+})
