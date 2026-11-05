@@ -80,7 +80,7 @@ export const addToCart = async (req, res, next) => {
                         "items.$.quantity": updatedQuantity
                     }
                 }, {
-                    new: true,
+                    returnDocument: "after",
                     runValidators: true
                 })
 
@@ -104,8 +104,6 @@ export const addToCart = async (req, res, next) => {
             }
 
 
-
-
         } else {
 
             result = await Cart.create({
@@ -118,7 +116,6 @@ export const addToCart = async (req, res, next) => {
 
 
         }
-
 
         res.status(201).json({
             success: true,
@@ -135,10 +132,14 @@ export const addToCart = async (req, res, next) => {
 //getUserCart
 export const getUserCart = async (req, res, next) => {
     try {
+        const userId = req.user._id;
+
+        const cart = await Cart.findOne({ user: userId }).populate("items.product", "name price images stock")
 
         res.status(200).json({
             success: true,
             message: "Cart found successfully",
+            data: cart ?? []
         })
 
     } catch (err) {
