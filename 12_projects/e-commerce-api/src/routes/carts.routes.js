@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post("/", userAuth, validate(cartSchema), addToCart)
 router.get("/", userAuth, getUserCart)
-router.patch("/", userAuth, updateProductQuantity)
-router.delete("/", userAuth, removeProductFromCart)
+router.patch("/:productId", userAuth, updateProductQuantity)
+router.delete("/:productId", userAuth, removeProductFromCart)
 router.delete("/", userAuth, clearCart)
 
 export default router;  

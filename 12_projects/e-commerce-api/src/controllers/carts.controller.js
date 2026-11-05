@@ -164,10 +164,38 @@ export const updateProductQuantity = async (req, res, next) => {
 //removeProductFromCart
 export const removeProductFromCart = async (req, res, next) => {
     try {
+        const userId = req.user._id;
+        const productId = req.params.productId;
+
+        if (!mongoose.isObjectIdOrHexString(productId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Id"
+            })
+        }
+
+        const updatedCart = await Cart.findOneAndUpdate({
+            user: userId,
+            "items.product": productId
+        }, {
+            $pull: {
+                items: {
+                    product: productId
+                }
+            }
+        }, { returnDocument: "after", runValidators: true })
+
+        if (!updatedCart) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found in cart"
+            })
+        }
 
         res.status(200).json({
             success: true,
             message: "Cart removed successfully",
+            data: updatedCart
         })
 
     } catch (err) {
@@ -178,10 +206,23 @@ export const removeProductFromCart = async (req, res, next) => {
 //clearCart
 export const clearCart = async (req, res, next) => {
     try {
+        const userId = req.user._id;
+
+        const deletedCart = await Cart.findOneAndDelete({
+            user: userId
+        })
+
+        if (!deletedCart) {
+            return res.status(404).json({
+                success: false,
+                message: "Cart not found"
+            })
+        }
 
         res.status(200).json({
             success: true,
             message: "Cart cleared successfully",
+            data: deletedCart
         })
 
     } catch (err) {
