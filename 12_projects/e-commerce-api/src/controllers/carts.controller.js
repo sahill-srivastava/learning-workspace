@@ -150,10 +150,66 @@ export const getUserCart = async (req, res, next) => {
 //updateProductQuantity
 export const updateProductQuantity = async (req, res, next) => {
     try {
+        const userId = req.user._id;
+        const productId = req.params.productId;
+        const quantity = req.body.quantity;
+
+        if (!mongoose.isObjectIdOrHexString(productId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Id"
+            })
+        }
+
+        //check product is available
+        const product = await Products.findById(productId);
+
+        if (!product || !product.isActive || product.stock === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not available"
+            })
+        }
+
+        const limit = 100;
+
+        //check product stock
+        if ((quantity > product.stock) || (quantity > limit)) {
+            return res.status(400).json({
+                success: false,
+                message: "Requested quantity exceeds the allowed limit or available stock"
+            })
+        }
+
+        const isProductExistInItems = await Cart.findOne({
+            user: userId,
+            "items.product": productId
+        })
+
+
+        if (!isProductExistInItems) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not available in the cart"
+            })
+        }
+
+        const result = await Cart.findOneAndUpdate({
+            user: userId,
+            "items.product": productId
+        }, {
+            $set: {
+                "items.$.quantity": quantity
+            }
+        }, {
+            returnDocument: "after",
+            runValidators: true
+        })
 
         res.status(200).json({
             success: true,
             message: "Cart updated successfully",
+            data: result
         })
 
     } catch (err) {
@@ -208,11 +264,15 @@ export const clearCart = async (req, res, next) => {
     try {
         const userId = req.user._id;
 
-        const deletedCart = await Cart.findOneAndDelete({
+        const updatedCart = await Cart.findOneAndUpdate({
             user: userId
-        })
+        }, {
+            $set: {
+                items: []
+            }
+        }, { returnDocument: "after", runValidators: true })
 
-        if (!deletedCart) {
+        if (!updatedCart) {
             return res.status(404).json({
                 success: false,
                 message: "Cart not found"
@@ -222,7 +282,7 @@ export const clearCart = async (req, res, next) => {
         res.status(200).json({
             success: true,
             message: "Cart cleared successfully",
-            data: deletedCart
+            data: updatedCart
         })
 
     } catch (err) {
