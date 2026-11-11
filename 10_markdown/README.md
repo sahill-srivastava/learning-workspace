@@ -87,4 +87,5 @@ Oct 11 - Attended AI Infrastructure
 Oct 25 - Making Career Strategy , starting postgresql
 Nov 1 - video creation
 Nov 9 - celebrating Diwali
-Nove 10 - DML landing page
+Nov 10 - DML landing page
+Nov 11 - Bhaidooj
