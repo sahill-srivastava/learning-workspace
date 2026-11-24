@@ -95,3 +95,4 @@ Nov 18 - Recovery
 Nov 19 - Some refinementment in health
 Nov 22 - NOt feeling well
 Nov 23 - feeling well
+nov 24 - working on company project
