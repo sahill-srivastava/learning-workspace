@@ -42,14 +42,14 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    shippingCharge: {
+        type: Number,
+        required: true
+    },
     totalAmount: {
         type: Number,
         required: true,
         min: 0
-    },
-    shippingCharge: {
-        type: Number,
-        required: true
     },
     tax: {
         type: Number,
@@ -57,7 +57,7 @@ const orderSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ["COD", "ONLINE"],
+        enum: ["COD", "Online"],
         required: true
     },
     paymentStatus: {
