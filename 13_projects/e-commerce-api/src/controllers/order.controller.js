@@ -1,12 +1,12 @@
 import { success } from "zod";
 import Cart from "../models/Cart.js";
 import Products from "../models/Products.js";
+import Order from "../models/Order.js";
 
 //create order
 export const createOrderByCart = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        // console.log(userId)
 
         const cartItem = await Cart.findOne({ user: userId })
 
@@ -17,7 +17,6 @@ export const createOrderByCart = async (req, res, next) => {
             })
         }
 
-        // console.log(cartItem)
 
         const items = cartItem.items;
 
@@ -32,17 +31,15 @@ export const createOrderByCart = async (req, res, next) => {
 
         const productItems = await Promise.all(
             items.map(async (i) => {
-                // console.log(i)
 
                 const productId = i.product;
                 const quantity = i.quantity;
 
                 const product = await Products.findById(productId)
 
-                // console.log("prod :", product)
                 const { _id, name, price, images } = product;
 
-                console.log("price: ", price)
+                const image = images[0];
 
                 subtotal += price;
 
@@ -50,21 +47,89 @@ export const createOrderByCart = async (req, res, next) => {
                     product: _id,
                     name,
                     price,
-                    images,
+                    image,
                     quantity
                 };
             })
         )
 
-        console.log("productItems: ", productItems)
+        const { product, name, price, image, quantity } = productItems;
 
-        console.log(req.body)
+        if (!req.body) {
+            res.status(404).json({
+                success: false,
+                message: "Invalid data"
+            })
+        }
 
-        console.log("subtotal: ", subtotal)
+        const { shippingAddress, paymentMethod } = req.body;
+
+
+        const shippingCharge = subtotal >= 1000 ? 0 : 50;
+
+
+        const tax = (12 * subtotal) / 100;
+
+
+        const totalAmount = subtotal + shippingCharge + tax;
+
+
+        let orderStatus = "pending";
+
+        if (paymentMethod === "COD") {
+            orderStatus = "confirmed"
+        }
+
+        //saving order 
+        const order = await Order.create({
+            user: userId,
+            items: [...productItems],
+            shippingAddress,
+            subtotal,
+            shippingCharge,
+            totalAmount,
+            tax,
+            paymentMethod,
+            paymentStatus: "pending",
+            orderStatus
+        })
+
+        //update product stock
+        productItems.map(async (p) => {
+            const productId = p.product;
+            const quantity = p.quantity;
+
+            const existingProd = await Products.findById(productId)
+
+            const updatedQuantity = existingProd.stock - quantity;
+
+            await Products.findByIdAndUpdate(
+                productId,
+                {
+                    $set: {
+                        stock: updatedQuantity
+                    }
+                },
+                { returnDocument: "after", runValidators: true }
+            )
+
+        })
+
+        //clear cart
+        await Cart.findOneAndUpdate(
+            { user: userId },
+            {
+                $set: {
+                    items: []
+                }
+            }
+
+        )
 
         res.status(201).json({
             success: true,
-            message: "Hii"
+            message: "Order successfully created",
+            data: order
         })
 
     } catch (err) {

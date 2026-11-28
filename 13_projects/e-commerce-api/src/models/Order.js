@@ -53,7 +53,8 @@ const orderSchema = new mongoose.Schema({
     },
     tax: {
         type: Number,
-        required: true
+        required: true,
+        min: 0
     },
     paymentMethod: {
         type: String,
@@ -63,7 +64,7 @@ const orderSchema = new mongoose.Schema({
     paymentStatus: {
         type: String,
         enum: ["pending", "paid", "failed", "refunded"],
-        required: true
+        default: "pending"
     },
     orderStatus: {
         type: String,
@@ -75,7 +76,7 @@ const orderSchema = new mongoose.Schema({
             "delivered",
             "cancelled"
         ],
-        required: true
+        default: "pending"
     }
 }, { timestamps: true })
 
